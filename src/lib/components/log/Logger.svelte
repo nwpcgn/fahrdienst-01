@@ -76,7 +76,8 @@
 				onclick={() => {
 					log.remove(id)
 				}}
-				class="btn btn-circle btn-sm btn-info">
+				class="button"
+				style="--fs: 18px;">
 				{@render iconT('fd-close')}
 			</button>
 		{/if}
@@ -112,18 +113,18 @@
 				grid-area: log-text;
 			}
 		}
+	}
 
-		.warning {
-			--col: var(--color-warning-content);
-			--bg: var(--color-warning);
-		}
-		.error {
-			--col: var(--color-error-content);
-			--bg: var(--color-error);
-		}
-		.success {
-			--col: var(--color-success-content);
-			--bg: var(--color-success);
-		}
+	.log-item.warning {
+		--col: var(--color-warning-content);
+		--bg: var(--color-warning);
+	}
+	.log-item.error {
+		--col: var(--color-error-content);
+		--bg: var(--color-error);
+	}
+	.log-item.success {
+		--col: var(--color-success-content);
+		--bg: var(--color-success);
 	}
 </style>

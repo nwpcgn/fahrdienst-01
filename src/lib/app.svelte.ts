@@ -2,7 +2,15 @@ import fetchData from './utils/fetchData'
 import sleep from './utils/sleep'
 import type { Tour, TourStop } from './types'
 import getApiKey from './getApiKey'
-
+import log from './components/log/log.svelte'
+const logText = (
+	message: string,
+	type: string = 'info',
+	timeout: number = 5000
+) => {
+	console.log(message, type)
+	log.add({ message, type, timeout })
+}
 class Fahrdienst {
 	APIURL1: string = 'https://lab-quade.de/fahrdienst_app/tour_header_2.php'
 	APIURL2: string = 'https://lab-quade.de/fahrdienst_app/tour_detail_2.php'
@@ -11,7 +19,7 @@ class Fahrdienst {
 	tourUrl: string = $state('')
 	routeList: Tour[] = $state(null)
 	tourList: TourStop[] = $state()
-	tourId: string = $state('')
+	tourId: number = $state()
 	activeTour: Tour = $state(null)
 	detailUrl: string = $derived(
 		`${this.APIURL2}?uid=${this.apiKey}&tour_id=${this.tourId}` || null
@@ -34,13 +42,14 @@ class Fahrdienst {
 		if (this.detailUrl) {
 			await this.getData(this.detailUrl)
 			await sleep()
+			logText('App started')
 			return true
 		}
 	}
 
 	init() {
 		const { key, datum, url } = getApiKey()
-		console.log({ key, datum })
+	
 		this.apiKey = key
 		this.apiDatum = datum
 		this.tourUrl = url

@@ -11,8 +11,10 @@
 	// 		icon: 'fd-map'
 	// 	}
 	// })
-	let { next } = $props()
+	let { runApp } = $props()
 	// let showModal = $state(false)
+
+	let current = $derived($apiStore?.tour?.RH_ID || 0)
 </script>
 
 {#if app?.routeList}
@@ -20,13 +22,13 @@
 		class="stack-list w-full gap-0 divide-y divide-base-300 rounded-box border border-base-300">
 		{#each app.routeList as { Routentyp, Routenname, Fahrer, Boxen, RH_ID }, i (i)}
 			{@const { name, icon, slug, label } = tourType[Routentyp]}
-			<button
+			<button disabled={$apiStore.tour?.RH_ID && app.tourId != RH_ID}
 				onclick={() => {
 					app.setTour({ Routentyp, Routenname, Fahrer, Boxen, RH_ID })
 					apiStore.update((d) => {
-						return { ...d, tour: app.activeTour }
+						return { ...d, tourId: RH_ID, tour: app.activeTour }
 					})
-					next()
+					runApp()
 					// dialogContent.props = { ...app.activeTour }
 					// showModal = true
 				}}

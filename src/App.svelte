@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Spinner from './lib/components/Spinner.svelte'
+
 	import { app } from './lib/app.svelte.ts'
 	import { apiStore } from './lib/storage'
 	import { onMount } from 'svelte'
@@ -8,55 +10,35 @@
 	import Sprites from './lib/components/Sprites.svelte'
 	import StackList from './lib/components/StackList.svelte'
 	import Logger from './lib/components/log/Logger.svelte'
+	import { randRow, sleep } from './lib'
 	const btnClass =
 		'btn btn-soft btn-circle transition-all duration-200 ease transform active:scale-95'
-
-	const views = {
-		start: {
-			slug: 'start',
-			href: '/',
-			name: 'Routen',
-			icon: 'fd-route',
-			component: startTemplate
-		},
-		tour: {
-			slug: 'tour',
-			href: '/tour',
-			name: 'Tour',
-			icon: 'fd-map',
-			component: tourTemplate
-		},
-		info: {
-			slug: 'info',
-			href: '/info',
-			name: 'Info',
-			icon: 'fd-info',
-			component: infoTemplate
-		}
-	}
-	let viewId = $state('init')
-	let vi = $derived(Object.keys(views).indexOf(viewId))
-	let view = $derived(views[viewId] || null)
+	const STAT = Object.freeze({
+		init: 'INIT',
+		ready: 'READY',
+		run: 'RUN'
+	})
+	let stat = $state(STAT.init)
+	let showSb = $state(false)
 	let timerId: number = $state()
-	const next = async () => {
+	const logText = (
+		message: string,
+		type: string = 'info',
+		timeout: number = 5000
+	) => {
+		console.log(message, type)
+		log.add({ message, type, timeout })
+	}
+	const isReady = async () => {
+		logText('App Init Ready', 'success', 2000)
 		clear()
-		if (vi < Object.keys(views).length - 1) {
-			viewId = Object.keys(views)[vi + 1]
-		}
+		stat = STAT.ready
 	}
-
-	const changeView = (str: string) => {
-		if (Object.keys(views).includes(str)) {
-			viewId = str
-		}
+	const runApp = async () => {
+		console.log('Run')
+		clear()
+		stat = STAT.run
 	}
-
-	const addNote = async () => {
-		const obj = getNote()
-		console.log(obj)
-		log.add(obj)
-	}
-
 	const clear = () => {
 		if (timerId) clearTimeout(timerId)
 	}
@@ -74,7 +56,11 @@
 			app.init()
 		}
 
-		timerId = setTimeout(next, 3333)
+		if ($apiStore.tour?.RH_ID) {
+			app.setTour({ ...$apiStore.tour })
+		}
+
+		timerId = setTimeout(isReady, 3333)
 
 		return () => clear()
 	})
@@ -82,69 +68,121 @@
 
 <div class="sticky top-0 z-20 bg-base-100 shadow-sm">
 	<nav class="content is-flat navbar">
-		<div class="nav flex-1">
+		<div class="nav flex-1 text-xl font-bold">
 			{#if app.activeTour}
-				{@render iconT('fd-car')}<span class="text-xl font-bold"
-					>{$apiStore?.tour.Routenname}</span>
-				{@render iconT('fd-box')}<span class="text-xl font-bold"
-					>{$apiStore?.tour.Boxen}</span>
+				{@render iconT('fd-car')}<span>{$apiStore?.tour?.Routenname}</span>
+				{@render iconT('fd-box')}<span>{$apiStore?.tour?.Boxen}</span>
+				{@render iconT('fd-map')}<span><span class="text-info">{$apiStore?.step}</span>/{app.tourList?.length}</span>
 			{:else}
-				<button class="btn btn-ghost" onclick={addNote}>{view?.name}</button>
+				<span class="">Fahrdienst</span><span>{stat}</span>
 			{/if}
 		</div>
 		<div class="flex gap-1">
-			{#each Object.values(views) as { name, icon, slug }, i (i)}
-				<button
-					onclick={() => {
-						viewId = slug
-					}}
-					class={btnClass}
-					class:btn-info={viewId === slug}
-					aria-label={name}>
-					{@render iconT(icon)}
-				</button>
-			{/each}
+			<button
+				onclick={() => {
+					showSb = !showSb
+				}}
+				class={btnClass}
+				aria-label="Info">
+				{@render iconT('fd-burger')}
+			</button>
 		</div>
 	</nav>
 </div>
+
 <div class="layout">
 	<div class="main">
-		{@render view?.component?.({ ...view })}
-		{#if !view}
-			{@render spinnerT()}
+		{#if stat === 'READY'}
+			<Page center>
+				<header class="nav mb-8" style="--fs: 32px;">
+					{@render iconT('fd-route')}
+					<h1>Routen</h1>
+				</header>
+				<StackList {runApp}></StackList>
+			</Page>
+		{/if}
+		{#if stat === 'RUN'}
+			<Page>
+				<List></List>
+			</Page>
+		{/if}
+		{#if stat === 'INIT'}
+			<Spinner onClick={isReady} />
 		{/if}
 	</div>
+	{@render sideBar()}
 	<div class="aside">
 		<Logger></Logger>
 	</div>
 </div>
+
+{#snippet sideBar()}
+	<aside
+		class="absolute inset-0 z-40 transform border bg-base-200 transition-all duration-400 ease-in"
+		class:opacity-50={!showSb}
+		class:translate-x-full={!showSb}>
+		<div class="content">
+			<h1 class="mb-4">Info</h1>
+			<details
+				class="collapse border border-base-300 bg-base-100"
+				name="my-accordion-det-1"
+				open>
+				<summary class="collapse-title font-semibold">Tour Data</summary>
+				<div class="collapse-content text-sm">
+					<div class="overflow-hidden">
+						<pre
+							class="overflow-auto bg-neutral p-2 text-success">{JSON.stringify(
+								$apiStore,
+								null,
+								2
+							)}</pre>
+					</div>
+				</div>
+			</details>
+			<details
+				class="collapse border border-base-300 bg-base-100"
+				name="my-accordion-det-1">
+				<summary class="collapse-title font-semibold">Callbacks</summary>
+				<div class="collapse-content text-sm">
+					<div class="overflow-hidden">
+						<pre
+							class="overflow-auto bg-neutral p-2 text-success">{JSON.stringify(
+								app.info(),
+								null,
+								2
+							)}</pre>
+					</div>
+				</div>
+			</details>
+			<details
+				class="collapse border border-base-300 bg-base-100"
+				name="my-accordion-det-1">
+				<summary class="collapse-title font-semibold">Reset</summary>
+				<div class="collapse-content">
+					<nav>
+						<button
+							class="btn btn-soft btn-xl btn-error"
+							onclick={() => {
+								apiStore.set({
+									key: null,
+									datum: null,
+									step: 1
+								})
+								stat = STAT.init
+								showSb = false
+								clear()
+								timerId = setTimeout(isReady, 3333)
+							}}>Reset App</button>
+					</nav>
+				</div>
+			</details>
+		</div>
+	</aside>
+{/snippet}
+
 {#snippet iconT(name)}
 	<svg class="nwp-icon"><use xlink:href="#{name}"></use></svg>
 {/snippet}
 
-{#snippet spinnerT()}
-	<div class="page nwp center bg-neutral text-neutral-content">
-		<button class="button" onclick={next}> <div class="loader"></div></button>
-	</div>
-{/snippet}
-{#snippet startTemplate({ name, icon })}
-	<Page center>
-		<header class="nav mb-8" style="--fs: 32px;">
-			{@render iconT(icon)}
-			<h1>{name}</h1>
-		</header>
-		<StackList {next}></StackList>
-	</Page>
-{/snippet}
-{#snippet tourTemplate()}
-	<Page>
-		<List></List>
-	</Page>
-{/snippet}
-{#snippet infoTemplate({ name, icon })}
-	<Page>
-		<List></List>
-	</Page>
-{/snippet}
 <div id="portals"></div>
 <Sprites />

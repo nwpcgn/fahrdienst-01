@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { TourCallBack } from '../types'
+
 	let {
 		laufende_nummer,
 		eins_kuerzel,
@@ -6,14 +8,14 @@
 		eins_strasse,
 		eins_plz,
 		eins_ort,
-		eins_telefon,
-		eins_bedarf,
 		eins_info,
 		eins_boxen,
 		material,
 		befunde,
 		proben,
-		listId = $bindable()
+		id,
+		listId = $bindable(),
+		onSubmit
 	} = $props()
 	let elem: HTMLDivElement = $state()
 	let isDisabled = $derived(listId != laufende_nummer)
@@ -33,6 +35,7 @@
 	bind:this={elem}
 	class="list-row"
 	class:grayscale={isDisabled}
+	class:pointer-events-none={isDisabled}
 	class:blur-[2px]={isDisabled}>
 	<div>
 		<div class="text-sm font-thin text-neutral">
@@ -60,7 +63,20 @@
 	{@render callBackForm()}
 	<div class="list-col-wrap text-xs">
 		<button
-			onclick={() => (listId += 1)}
+			onclick={() => {
+				const payload: TourCallBack = {
+					eins_kuerzel,
+					befunde,
+					material,
+					proben
+				}
+				onSubmit({
+					eins_kuerzel,
+					befunde,
+					material,
+					proben
+				})
+			}}
 			class="btn btn-soft btn-sm btn-primary">
 			Ready
 		</button>
