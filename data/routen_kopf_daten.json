@@ -1,0 +1,67 @@
+{
+	"routen_kopf_daten": [
+		{
+			"Routentyp": 1,
+			"Routenname": "AA",
+			"Fahrer": "",
+			"Boxen": 17,
+			"RH_ID": 2368
+		},
+		{
+			"Routentyp": 1,
+			"Routenname": "BF",
+			"Fahrer": "",
+			"Boxen": 19,
+			"RH_ID": 2375
+		},
+		{
+			"Routentyp": 2,
+			"Routenname": "BN",
+			"Fahrer": "F1",
+			"Boxen": 35,
+			"RH_ID": 2382
+		},
+		{
+			"Routentyp": 1,
+			"Routenname": "BO",
+			"Fahrer": "",
+			"Boxen": 47,
+			"RH_ID": 2389
+		},
+		{
+			"Routentyp": 1,
+			"Routenname": "DS",
+			"Fahrer": "",
+			"Boxen": 53,
+			"RH_ID": 2396
+		},
+		{
+			"Routentyp": 1,
+			"Routenname": "EI",
+			"Fahrer": "F4",
+			"Boxen": 62,
+			"RH_ID": 2403
+		},
+		{
+			"Routentyp": 1,
+			"Routenname": "EU",
+			"Fahrer": "F2",
+			"Boxen": 66,
+			"RH_ID": 2410
+		},
+		{
+			"Routentyp": 1,
+			"Routenname": "GM",
+			"Fahrer": "",
+			"Boxen": 71,
+			"RH_ID": 2417
+		},
+		{
+			"Routentyp": 3,
+			"Routenname": "HS",
+			"Fahrer": "",
+			"Boxen": 77,
+			"RH_ID": 2424
+		}
+	]
+}
