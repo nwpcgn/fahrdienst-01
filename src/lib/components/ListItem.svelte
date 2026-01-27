@@ -68,7 +68,7 @@
 					proben
 				})
 			}}
-			class="btn btn-soft btn-sm btn-primary">
+			class="btn btn-soft btn-sm btn-info">
 			Ready
 		</button>
 	</div>
