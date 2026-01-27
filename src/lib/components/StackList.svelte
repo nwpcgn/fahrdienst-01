@@ -22,7 +22,7 @@
 				<div class="stack-item" style="--fs: 20px;">
 					{@render iconT(icon)}
 					<span class="h4 font-bold">{Routenname}</span>
-					<span class="flex-1">{RH_ID} / {app?.activeTour?.RH_ID}</span>
+					<span class="flex-1"></span>
 					<span
 						class="badge badge-sm"
 						class:badge-info={label === 'info'}
