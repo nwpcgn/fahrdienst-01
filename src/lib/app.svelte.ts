@@ -50,7 +50,7 @@ class Fahrdienst {
 	async getData() {
 		try {
 			const { routen_detail_daten } = await fetchData(
-				'/data/routen_detail_daten.json'
+				'./data/routen_detail_daten.json'
 			)
 
 			if (routen_detail_daten) {
@@ -68,7 +68,7 @@ class Fahrdienst {
 	async getTouren() {
 		try {
 			const { routen_kopf_daten } = await fetchData(
-				'/data/routen_kopf_daten.json'
+				'./data/routen_kopf_daten.json'
 			)
 
 			if (routen_kopf_daten) {
