@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { apiStore } from './../storage.ts'
 	import { app, tourType } from '../app.svelte.js'
-	let { runApp } = $props()
+	let { runApp, updateStore } = $props()
 </script>
 
 {#if app?.routeList}
@@ -10,12 +9,10 @@
 		{#each app.routeList as { Routentyp, Routenname, Fahrer, Boxen, RH_ID }, i (i)}
 			{@const { icon, slug, label } = tourType[Routentyp]}
 			<button
-				disabled={$apiStore.tour?.RH_ID && app.tourId != RH_ID}
+				disabled={RH_ID != app.tourId && app.tourId}
 				onclick={() => {
 					app.setTour({ Routentyp, Routenname, Fahrer, Boxen, RH_ID })
-					apiStore.update((d) => {
-						return { ...d, tourId: RH_ID, tour: app.activeTour }
-					})
+					updateStore()
 					runApp()
 					// dialogContent.props = { ...app.activeTour }
 					// showModal = true
@@ -25,7 +22,7 @@
 				<div class="stack-item" style="--fs: 20px;">
 					{@render iconT(icon)}
 					<span class="h4 font-bold">{Routenname}</span>
-					<span class="flex-1"></span>
+					<span class="flex-1">{RH_ID} / {app?.activeTour?.RH_ID}</span>
 					<span
 						class="badge badge-sm"
 						class:badge-info={label === 'info'}

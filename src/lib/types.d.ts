@@ -5,6 +5,16 @@
 	Boxen: number
 	RH_ID: number
 }
+export interface Storage {
+	key: string
+	datum: string
+	url1: string
+	name: string
+	fahrer: string
+	boxen: number
+	tourId: number
+	step: number
+}
 
 export interface TourStop {
 	laufende_nummer: number

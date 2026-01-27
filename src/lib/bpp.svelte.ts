@@ -1,7 +1,6 @@
-import { SvelteMap } from 'svelte/reactivity'
 import fetchData from './utils/fetchData'
 import sleep from './utils/sleep'
-import type { Tour, TourStop, Storage } from './types'
+import type { Tour, TourStop } from './types'
 import getApiKey from './getApiKey'
 import log from './components/log/log.svelte'
 const logText = (
@@ -22,13 +21,11 @@ class Fahrdienst {
 	fahrer: string = $state('')
 	boxen: number = $state(0)
 	tourId: number = $state(0)
-	step: number = $state(1)
 	detailUrl: string = $derived(
 		`${this.APIURL2}?uid=${this.key}&tour_id=${this.tourId}`
 	)
 	routeList: Tour[] = $state(null)
 	tourList: TourStop[] = $state(null)
-	callBacks = new SvelteMap()
 	constructor() {
 		this.init()
 	}
@@ -41,10 +38,8 @@ class Fahrdienst {
 		this.fahrer = ''
 		this.boxen = 0
 		this.tourId = 0
-		this.step = 1
 		this.routeList = null
 		this.tourList = null
-		this.init()
 	}
 
 	info() {
@@ -55,8 +50,7 @@ class Fahrdienst {
 			name: this.name,
 			fahrer: this.fahrer,
 			boxen: this.boxen,
-			tourId: this.tourId,
-			step: this.step
+			tourId: this.tourId
 		}
 	}
 
@@ -72,19 +66,7 @@ class Fahrdienst {
 			return true
 		}
 	}
-	async restore(value: Storage) {
-		this.name = value.name
-		this.fahrer = value.fahrer
-		this.boxen = value.boxen
-		this.tourId = value.tourId
-		this.step = value.step
-		if (this.detailUrl) {
-			await this.getData(this.detailUrl)
-			await sleep()
-			logText('App started')
-			return true
-		}
-	}
+
 	init() {
 		const { key, datum, url } = getApiKey()
 		this.key = key

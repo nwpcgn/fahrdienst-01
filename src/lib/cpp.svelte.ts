@@ -1,7 +1,6 @@
-import { SvelteMap } from 'svelte/reactivity'
 import fetchData from './utils/fetchData'
 import sleep from './utils/sleep'
-import type { Tour, TourStop, Storage } from './types'
+import type { Tour, TourStop } from './types'
 import getApiKey from './getApiKey'
 import log from './components/log/log.svelte'
 const logText = (
@@ -15,56 +14,40 @@ const logText = (
 class Fahrdienst {
 	APIURL1: string = 'https://lab-quade.de/fahrdienst_app/tour_header_2.php'
 	APIURL2: string = 'https://lab-quade.de/fahrdienst_app/tour_detail_2.php'
-	key: string = $state('')
-	datum: string = $state('')
-	url1: string = $state('')
-	name: string = $state('')
-	fahrer: string = $state('')
-	boxen: number = $state(0)
-	tourId: number = $state(0)
-	step: number = $state(1)
-	detailUrl: string = $derived(
-		`${this.APIURL2}?uid=${this.key}&tour_id=${this.tourId}`
-	)
+	apiKey: string = $state('')
+	apiDatum: string = $state('')
+	tourUrl: string = $state('')
 	routeList: Tour[] = $state(null)
-	tourList: TourStop[] = $state(null)
-	callBacks = new SvelteMap()
+	tourList: TourStop[] = $state()
+	tourId: number = $state()
+	activeTour: Tour = $state(null)
+	detailUrl: string = $derived(
+		`${this.APIURL2}?uid=${this.apiKey}&tour_id=${this.tourId}`
+	)
 	constructor() {
 		this.init()
 	}
 
 	reset() {
-		this.key = ''
-		this.datum = ''
-		this.url1 = ''
-		this.name = ''
-		this.fahrer = ''
-		this.boxen = 0
 		this.tourId = 0
-		this.step = 1
-		this.routeList = null
+		this.activeTour = null
 		this.tourList = null
+		this.routeList = null
 		this.init()
 	}
 
 	info() {
 		return {
-			key: this.key,
-			datum: this.datum,
-			url1: this.url1,
-			name: this.name,
-			fahrer: this.fahrer,
-			boxen: this.boxen,
+			key: this.apiKey,
+			datum: this.apiDatum,
 			tourId: this.tourId,
-			step: this.step
+			tour: this.activeTour
 		}
 	}
 
 	async setTour(value: Tour) {
-		this.name = value.Routenname
-		this.fahrer = value.Fahrer
-		this.boxen = value.Boxen
-		this.tourId = value.RH_ID
+		this.tourId = value?.RH_ID
+		this.activeTour = { ...value }
 		if (this.detailUrl) {
 			await this.getData(this.detailUrl)
 			await sleep()
@@ -72,24 +55,12 @@ class Fahrdienst {
 			return true
 		}
 	}
-	async restore(value: Storage) {
-		this.name = value.name
-		this.fahrer = value.fahrer
-		this.boxen = value.boxen
-		this.tourId = value.tourId
-		this.step = value.step
-		if (this.detailUrl) {
-			await this.getData(this.detailUrl)
-			await sleep()
-			logText('App started')
-			return true
-		}
-	}
+
 	init() {
 		const { key, datum, url } = getApiKey()
-		this.key = key
-		this.datum = datum
-		this.url1 = url
+		this.apiKey = key
+		this.apiDatum = datum
+		this.tourUrl = url
 		this.getTouren()
 	}
 
