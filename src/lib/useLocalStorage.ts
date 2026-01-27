@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store'
 import type { Writable } from 'svelte/store'
 
-type ValueType = string | number | boolean | object | any[]
+type ValueType = string | number | boolean | object | unknown[]
 
 export function useLocalStorage<T extends ValueType>(
 	key: string,
@@ -17,7 +17,7 @@ export function useLocalStorage<T extends ValueType>(
 		storeValue = initialValue
 	}
 
-	let store: Writable<T> = writable(storeValue)
+	const store: Writable<T> = writable(storeValue)
 
 	store.subscribe((value) => {
 		try {

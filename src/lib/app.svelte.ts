@@ -22,9 +22,17 @@ class Fahrdienst {
 	tourId: number = $state()
 	activeTour: Tour = $state(null)
 	detailUrl: string = $derived(
-		`${this.APIURL2}?uid=${this.apiKey}&tour_id=${this.tourId}` || null
+		`${this.APIURL2}?uid=${this.apiKey}&tour_id=${this.tourId}`
 	)
 	constructor() {
+		this.init()
+	}
+
+	reset() {
+		this.tourId = 0
+		this.activeTour = null
+		this.tourList = null
+		this.tourList = null
 		this.init()
 	}
 
@@ -49,7 +57,7 @@ class Fahrdienst {
 
 	init() {
 		const { key, datum, url } = getApiKey()
-	
+
 		this.apiKey = key
 		this.apiDatum = datum
 		this.tourUrl = url

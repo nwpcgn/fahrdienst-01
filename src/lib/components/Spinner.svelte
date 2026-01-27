@@ -2,7 +2,7 @@
 	let { handleClick } = $props()
 </script>
 
-<div class="page nwp center bg-neutral text-neutral-content z-50">
+<div class="page nwp center z-50 bg-neutral text-neutral-content">
 	<button class="button" onclick={handleClick}>
 		<div class="loader"></div></button>
 </div>

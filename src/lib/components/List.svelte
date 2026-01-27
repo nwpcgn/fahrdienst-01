@@ -5,18 +5,7 @@
 	import { app } from '../app.svelte.ts'
 	import log from './log/log.svelte.ts'
 	import ListItem from './ListItem.svelte'
-	import Dialog from './Dialog.svelte'
 	import sleep from '../utils/sleep.js'
-	let { changeView } = $props()
-	let dialogContent = $state({
-		snippet: ListItem,
-		props: {
-			slug: 'map',
-			name: 'Map',
-			icon: 'fd-map'
-		}
-	})
-	let showModal = $state(false)
 	let callbackMap = new SvelteMap()
 	let listId = $state($apiStore?.step || 1)
 </script>
@@ -33,11 +22,11 @@
 					if (!nextId) return
 					callbackMap.set(`${nextId}`, payload)
 					log.add({ message: 'Callback saved!' })
-					
+
 					await sleep(1000)
 					listId = nextId
-					apiStore.update(d => {
-						return {...d, step: listId}
+					apiStore.update((d) => {
+						return { ...d, step: listId }
 					})
 				}}></ListItem>
 		{/each}

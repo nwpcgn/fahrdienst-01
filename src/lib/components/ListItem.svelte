@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { TourCallBack } from '../types'
-
 	let {
 		laufende_nummer,
 		eins_kuerzel,
@@ -13,7 +11,6 @@
 		material,
 		befunde,
 		proben,
-		id,
 		listId = $bindable(),
 		onSubmit
 	} = $props()
@@ -64,12 +61,6 @@
 	<div class="list-col-wrap text-xs">
 		<button
 			onclick={() => {
-				const payload: TourCallBack = {
-					eins_kuerzel,
-					befunde,
-					material,
-					proben
-				}
 				onSubmit({
 					eins_kuerzel,
 					befunde,

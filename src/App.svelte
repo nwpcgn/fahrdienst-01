@@ -1,16 +1,14 @@
 <script lang="ts">
-	import Spinner from './lib/components/Spinner.svelte'
-
-	import { app } from './lib/app.svelte.ts'
 	import { apiStore } from './lib/storage'
+	import { app } from './lib/app.svelte.ts'
 	import { onMount } from 'svelte'
-	import { getNote, log } from './lib/components/log/log.svelte.ts'
 	import List from './lib/components/List.svelte'
+	import log from './lib/components/log/log.svelte.ts'
+	import Logger from './lib/components/log/Logger.svelte'
 	import Page from './lib/components/Page.svelte'
+	import Spinner from './lib/components/Spinner.svelte'
 	import Sprites from './lib/components/Sprites.svelte'
 	import StackList from './lib/components/StackList.svelte'
-	import Logger from './lib/components/log/Logger.svelte'
-	import { randRow, sleep } from './lib'
 	const btnClass =
 		'btn btn-soft btn-circle transition-all duration-200 ease transform active:scale-95'
 	const STAT = Object.freeze({
@@ -42,22 +40,23 @@
 	const clear = () => {
 		if (timerId) clearTimeout(timerId)
 	}
+	const initApp = async () => {
+		app.init()
+		const key = app.apiKey
+		const datum = app.apiDatum
+		apiStore.set({
+			key,
+			datum,
+			step: 1
+		})
+		if ($apiStore.tour?.RH_ID) {
+			app.setTour({ ...$apiStore.tour })
+		}
+	}
 
 	onMount(() => {
 		if (app.apiKey !== $apiStore.key) {
-			console.log('NewDay', app.apiKey)
-			const key = app.apiKey
-			const datum = app.apiDatum
-			apiStore.set({
-				key,
-				datum,
-				step: 1
-			})
-			app.init()
-		}
-
-		if ($apiStore.tour?.RH_ID) {
-			app.setTour({ ...$apiStore.tour })
+			initApp()
 		}
 
 		timerId = setTimeout(isReady, 3333)
@@ -72,9 +71,11 @@
 			{#if app.activeTour}
 				{@render iconT('fd-car')}<span>{$apiStore?.tour?.Routenname}</span>
 				{@render iconT('fd-box')}<span>{$apiStore?.tour?.Boxen}</span>
-				{@render iconT('fd-map')}<span><span class="text-info">{$apiStore?.step}</span>/{app.tourList?.length}</span>
+				{@render iconT('fd-map')}<span
+					><span class="text-info">{$apiStore?.step}</span>/{app.tourList
+						?.length}</span>
 			{:else}
-				<span class="">Fahrdienst</span><span>{stat}</span>
+				<span class="">Fahrdienst</span>
 			{/if}
 		</div>
 		<div class="flex gap-1">
@@ -168,9 +169,11 @@
 									datum: null,
 									step: 1
 								})
+								app.reset()
 								stat = STAT.init
 								showSb = false
 								clear()
+								initApp()
 								timerId = setTimeout(isReady, 3333)
 							}}>Reset App</button>
 					</nav>
