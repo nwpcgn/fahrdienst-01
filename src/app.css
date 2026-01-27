@@ -227,9 +227,9 @@ body {
 			margin-right: auto;
 		}
 	}
-	.page-fixed {
+/* 	.page-fixed {
 		overflow: hidden;
-	}
+	} */
 	.page-grow > article {
 		flex: 1;
 		margin-top: var(--page-space);

@@ -3,7 +3,7 @@
 </script>
 
 <div class="page nwp center z-50 bg-neutral text-neutral-content">
-	<button class="button" onclick={handleClick}>
+	<button class="button" aria-label="Click" onclick={handleClick}>
 		<div class="loader"></div></button>
 </div>
 
