@@ -86,7 +86,7 @@
 	// $inspect('Store', $apiStore)
 </script>
 
-<div class="sticky top-0 z-20 bg-base-100 shadow-sm">
+<div class="bg-base-100 shadow-sm">
 	<nav class="content is-flat navbar">
 		<div class="nav flex-1 text-xl font-bold">
 			{#if app.tourId}
