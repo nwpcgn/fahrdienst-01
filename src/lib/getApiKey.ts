@@ -9,10 +9,14 @@ function getApiKey() {
 	const month = String(now.getMonth() + 1).padStart(2, '0')
 	const year = now.getFullYear()
 	const dateStr = `${day}.${month}.${year}.`
+	const time = now.toLocaleTimeString('de-DE', {
+		hour: '2-digit',
+		minute: '2-digit'
+	})
 	const input = `${prefix}${dateStr}${postfix}`
 	const key = CryptoJS.MD5(input).toString()
 	const datum = `${year}-${month}-${day}`
 	const url = `${APIURL1}?uid=${key}&datum=${datum}`
-	return { key, datum, url }
+	return { key, datum, time, url }
 }
 export default getApiKey

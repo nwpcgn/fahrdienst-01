@@ -35,11 +35,8 @@
 					// Falsche UID
 					// Keine Daten
 					// Zu wenig Daten
-					 // Tour Besetzt
+					// Tour Besetzt
 
-
-
-					 
 					const nextId = app.tourList[id + 1]?.laufende_nummer
 					if (!nextId) return
 					callbackMap.set(`${nextId}`, payload)
