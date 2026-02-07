@@ -37,8 +37,6 @@
 	// const arrayToSave = Array.from(mySet)
 </script>
 
-
-
 <li
 	class="list-row"
 	style="--radius-box: 0;"

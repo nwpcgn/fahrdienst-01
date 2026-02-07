@@ -12,7 +12,7 @@
 				{@render iconT('fd-car')}<span>{$routeStore?.Routenname}</span>
 				{@render iconT('fd-box')}<span>{$routeStore?.Boxen}</span>
 				{@render iconT('fd-map')}<span
-					><span class="text-info">{$tourId.length + 1}</span>/{$routeLength}</span>
+					><span class="text-info">{$tourId.length}</span>/{$routeLength}</span>
 			{:else}
 				<span class="">Fahrdienst</span>
 			{/if}
