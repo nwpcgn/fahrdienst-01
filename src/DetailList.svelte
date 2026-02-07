@@ -95,6 +95,7 @@
 				<span>{$routeStore?.Zusatzinfo}</span>
 			</div>
 		{/if}
+		<details><pre>{JSON.stringify(value, null, 2)}</pre></details>
 		<ul class="list bg-base-100 shadow-md">
 			{#each value as item, id (id)}
 				<DetailItem {...item} {id} {onSubmit} bind:visited></DetailItem>

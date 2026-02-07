@@ -8,7 +8,7 @@
 		eins_plz,
 		eins_ort,
 		eins_telefon,
-		// eins_bedarf,
+		eins_bedarf,
 		eins_info,
 		eins_boxen,
 		material,
@@ -49,6 +49,10 @@
 		<div class="text-2xl font-thin tabular-nums">
 			{laufende_nummer}
 		</div>
+		{#if eins_bedarf}
+			<div class="badge badge-xs badge-success">Bedarf</div>
+		
+		{/if}
 	</div>
 	<div class="text-base">
 		<div class="line-clamp-4 font-bold">
