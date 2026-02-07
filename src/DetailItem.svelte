@@ -86,7 +86,7 @@
 				tourId.set(arrayToSave)
 			}}
 			class="btn btn-sm btn-info">
-			Submit
+			Senden
 		</button>
 	</div>
 </li>
@@ -106,6 +106,17 @@
 
 {#snippet callBackForm()}
 	<fieldset class="fieldset rounded-lg border border-info p-2">
+
+				<label class="split cursor-pointer">
+			<span class="text-base font-bold">B</span>
+			<input
+				onchange={(e) => {
+					// const isChecked = e.currentTarget.checked
+					rBefunde = e.currentTarget.checked ? 1 : 2
+				}}
+				type="checkbox"
+				checked={rBefunde == 1} />
+		</label>
 		<label class="split cursor-pointer">
 			<span class="text-base font-bold">M</span>
 			<input
@@ -116,16 +127,7 @@
 				type="checkbox"
 				checked={rMaterial == 1} />
 		</label>
-		<label class="split cursor-pointer">
-			<span class="text-base font-bold">B</span>
-			<input
-				onchange={(e) => {
-					// const isChecked = e.currentTarget.checked
-					rBefunde = e.currentTarget.checked ? 1 : 2
-				}}
-				type="checkbox"
-				checked={rBefunde == 1} />
-		</label>
+
 
 		<label class="split cursor-pointer">
 			<span class="text-base font-bold">P</span>
