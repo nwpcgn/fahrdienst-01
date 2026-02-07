@@ -8,13 +8,9 @@ export { default as uuid } from './utils/uuid.ts'
 
 // @index('./**/*.svelte', (f, _) => `export { default as ${_.pascalCase(f.name)} } from '${f.path}${f.ext}'`)
 export { default as Dialog } from './components/Dialog.svelte'
-export { default as List } from './components/List.svelte'
-export { default as ListItem } from './components/ListItem.svelte'
 export { default as Logger } from './components/log/Logger.svelte'
-export { default as Page } from './components/Page.svelte'
 export { default as Spinner } from './components/Spinner.svelte'
 export { default as Sprites } from './components/Sprites.svelte'
-export { default as StackList } from './components/StackList.svelte'
 export { default as Portal } from './components/util/Portal.svelte'
 // @endindex
 

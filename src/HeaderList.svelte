@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { getHeader, getDetail } from './lib'
-	import { uid, rhId, routeStore } from './lib/storage.ts'
+	import { getHeader } from './lib'
+	import { rhId, routeStore } from './lib/storage.ts'
 	import getApiKey from './lib/getApiKey'
 	const tourType = [
 		null,

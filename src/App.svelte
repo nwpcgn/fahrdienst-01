@@ -10,7 +10,7 @@
 	let showSb = $state(false)
 	const init = async () => {
 		const { key } = getApiKey()
-		console.log(VERS);
+		console.log(VERS)
 		if ($uid && $uid === key) {
 			if (!rhId) {
 				tourId.set([])
@@ -35,7 +35,7 @@
 				<span>Loading</span>
 			</div>
 		</section>
-	{:then value}
+	{:then _}
 		{#if !$rhId}
 			<section class="nwp page">
 				<article>
@@ -49,12 +49,6 @@
 				</article>
 			</section>
 		{/if}
-	{:catch error}
-		<section class="nwp center page">
-			<div>
-				<h4 class="text-error">Error</h4>
-			</div>
-		</section>
 	{/await}
 </main>
 

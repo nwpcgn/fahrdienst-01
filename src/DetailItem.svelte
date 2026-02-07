@@ -8,7 +8,7 @@
 		eins_plz,
 		eins_ort,
 		eins_telefon,
-		eins_bedarf,
+		// eins_bedarf,
 		eins_info,
 		eins_boxen,
 		material,
