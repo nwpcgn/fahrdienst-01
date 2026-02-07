@@ -50,8 +50,8 @@
 			{laufende_nummer}
 		</div>
 	</div>
-	<div>
-		<div class="line-clamp-2 font-bold">
+	<div class="text-base">
+		<div class="line-clamp-4 font-bold">
 			{@html eins_name.replaceAll('\n', '<br>')}
 		</div>
 		<div>{eins_strasse}</div>
@@ -85,7 +85,7 @@
 				const arrayToSave = Array.from(visited)
 				tourId.set(arrayToSave)
 			}}
-			class="btn btn-soft btn-sm btn-info">
+			class="btn btn-sm btn-info">
 			Submit
 		</button>
 	</div>

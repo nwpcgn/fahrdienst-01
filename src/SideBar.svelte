@@ -3,7 +3,7 @@
 </script>
 
 <aside
-	class="absolute inset-0 z-40 transform border bg-base-200 transition-all duration-400 ease-in"
+	class="fixed inset-0 z-40 transform border bg-base-200 transition-all duration-400 ease-in"
 	class:opacity-50={!showSb}
 	class:translate-x-full={!showSb}>
 	<button

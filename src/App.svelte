@@ -6,16 +6,18 @@
 	import { uid, rhId, tourId } from './lib/storage.ts'
 	import Sprites from './lib/components/Sprites.svelte'
 	import getApiKey from './lib/getApiKey'
+	const VERS = 'v0.2.04'
 	let showSb = $state(false)
 	const init = async () => {
-		const { key, datum, time, url } = getApiKey()
+		const { key } = getApiKey()
+		console.log(VERS);
 		if ($uid && $uid === key) {
 			if (!rhId) {
 				tourId.set([])
 			}
 			console.log('Same Day', $uid, $rhId, $tourId)
 		} else {
-			console.log('Fail UID')
+			console.log('New Day')
 			uid.set(key)
 			rhId.set(0)
 			tourId.set([])
@@ -26,39 +28,36 @@
 
 <AppBar bind:showSb></AppBar>
 
-<div class="layout">
-	<main class="main">
-		{#await promise}
-			<section class="nwp page center">
-				<div>
-					<span>Loading</span>
-				</div>
+<main class="main">
+	{#await promise}
+		<section class="nwp page center">
+			<div>
+				<span>Loading</span>
+			</div>
+		</section>
+	{:then value}
+		{#if !$rhId}
+			<section class="nwp page">
+				<article>
+					<HeaderList></HeaderList>
+				</article>
 			</section>
-		{:then value}
-			{#if !$rhId}
-				<section class="nwp page">
-					<article>
-						<HeaderList></HeaderList>
-					</article>
-				</section>
-			{:else}
-				<section class="nwp page">
-					<article>
-						<DetailList></DetailList>
-					</article>
-				</section>
-			{/if}
+		{:else}
+			<section class="nwp page">
+				<article>
+					<DetailList></DetailList>
+				</article>
+			</section>
+		{/if}
+	{:catch error}
+		<section class="nwp center page">
+			<div>
+				<h4 class="text-error">Error</h4>
+			</div>
+		</section>
+	{/await}
+</main>
 
-			<aside class="aside"></aside>
-		{:catch error}
-			<section class="nwp center page">
-				<div>
-					<h4 class="text-error">Error</h4>
-				</div>
-			</section>
-		{/await}
-	</main>
-</div>
 <div id="portals"></div>
 
 <SideBar bind:showSb>

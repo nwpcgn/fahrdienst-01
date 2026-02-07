@@ -182,27 +182,12 @@ body {
 
 /* --------------------------------- Layout --------------------------------- */
 @layer components {
-	.layout {
-		--page-space: var(--spacing-md);
-		--page-width: 480px;
-		flex: 1;
-		display: grid;
-		grid-template-columns: 1fr auto;
-		grid-template-rows: 1fr;
-		grid-auto-flow: row;
-		grid-template-areas: 'main aside';
-		position: relative;
-		overflow: hidden;
-		width: 100%;
-		height: 100%;
-	}
-
 	.main {
 		flex: 1;
 		display: grid;
-		grid-template-columns: 1fr auto;
+		grid-template-columns: 1fr;
 		grid-template-rows: 1fr;
-		grid-template-areas: 'page aside';
+		grid-template-areas: 'page';
 		width: 100%;
 		height: 100%;
 		position: relative;
@@ -245,32 +230,8 @@ body {
 		animation: 2.5s cubic-bezier(0.25, 1, 0.3, 1) circle-in-center both;
 		animation-delay: 250ms;
 	}
-	.page > article {
-		grid-area: content;
-	}
-	.aside {
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr;
-		grid-auto-flow: row;
-		grid-template-areas: 'panel';
-		grid-area: aside;
-		position: relative;
-		overflow: hidden;
-	}
-
-	.panel {
-		grid-area: panel;
-		height: 100%;
-		position: relative;
-		overflow-x: hidden;
-		overflow-y: hidden;
-		display: flex;
-		flex-direction: column;
-	}
 
 	.page > article,
-	.panel > article,
 	.content {
 		padding: var(--spacing-clamp);
 		width: 100%;

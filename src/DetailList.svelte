@@ -82,13 +82,6 @@
 				console.log('No tourId, start with empty visited set')
 			}
 		}
-
-		return () => {
-			console.log('Unmount DetailList')
-			const arrayToSave = Array.from(visited)
-			console.log('Array to save:', arrayToSave)
-			tourId.set(arrayToSave) // Speichern des Arrays in tourId
-		}
 	})
 </script>
 
