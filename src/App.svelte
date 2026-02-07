@@ -8,7 +8,7 @@
 	import { uid, rhId, tourId } from './lib/storage.ts'
 	import Sprites from './lib/components/Sprites.svelte'
 	import getApiKey from './lib/getApiKey'
-	const VERS = 'v0.2.04'
+	const VERS = 'v0.2.05'
 	let showSb = $state(false)
 	const init = async () => {
 		const { key } = getApiKey()
