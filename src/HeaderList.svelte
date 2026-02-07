@@ -33,10 +33,9 @@
 				return data
 			}
 
-			throw new Error('Fetch Error')
+		//	throw new Error('Fetch Error: No data returned')
 		} catch (error) {
-			console.error(error)
-			return error
+			throw new Error(error.message)
 		}
 	}
 
@@ -130,8 +129,8 @@
 		{/each}
 	</ul>
 {:catch error}
-	<h4>Error</h4>
-	<div><pre>{JSON.stringify(error)}</pre></div>
+	<h2 class="text-error">Error</h2>
+	<h4 class="text-error">{error}</h4>
 {/await}
 
 {#snippet iconT(name)}

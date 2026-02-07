@@ -72,7 +72,7 @@ export const getHeader = async (url: string): Tour[] => {
 		// }
 	} catch (error) {
 		console.error('Fehler beim Abrufen der Daten:', error)
-		throw new Error('Fetch Error: ' + error)
+		throw new Error(error)
 	}
 }
 

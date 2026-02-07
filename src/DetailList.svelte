@@ -1,4 +1,6 @@
 <script lang="ts">
+  import TourEnde from './TourEnde.svelte';
+
 	import { SvelteSet } from 'svelte/reactivity'
 	import DetailItem from './DetailItem.svelte'
 	import { getDetail } from './lib'
@@ -95,12 +97,14 @@
 				<span>{$routeStore?.Zusatzinfo}</span>
 			</div>
 		{/if}
-		<details><pre>{JSON.stringify(value, null, 2)}</pre></details>
+		<!-- <details><pre>{JSON.stringify(value, null, 2)}</pre></details> -->
 		<ul class="list bg-base-100 shadow-md">
+			<li class="p-4 pb-2 text-sm tracking-wide opacity-60">Tourenliste</li>
 			{#each value as item, id (id)}
 				<DetailItem {...item} {id} {onSubmit} bind:visited></DetailItem>
 			{/each}
 		</ul>
+		<TourEnde></TourEnde>
 	{/if}
 {:catch error}
 	<div><pre>{JSON.stringify(error)}</pre></div>

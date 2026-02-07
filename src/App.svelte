@@ -1,4 +1,6 @@
 <script lang="ts">
+	import TourReset from './TourReset.svelte'
+
 	import SideBar from './SideBar.svelte'
 	import AppBar from './AppBar.svelte'
 	import DetailList from './DetailList.svelte'
@@ -62,16 +64,13 @@
 		<li>Visited: {$tourId?.length ?? 0}</li>
 		<li>Version: {VERS}</li>
 	</ul>
-	<nav class="nav">
-		<button
-			class="btn btn-error"
-			onclick={() => {
-				tourId.set([])
-				rhId.set(0)
-				promise = init()
-				showSb = false
-			}}>Reset</button>
-	</nav>
+	<TourReset
+		onSuccess={() => {
+			tourId.set([])
+			rhId.set(0)
+			promise = init()
+			showSb = false
+		}}></TourReset>
 </SideBar>
 
 <Sprites />
