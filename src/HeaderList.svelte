@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getHeader, getDetail } from './lib'
-	import { uid, rhId } from './lib/storage.ts'
+	import { uid, rhId, routeStore } from './lib/storage.ts'
 	import getApiKey from './lib/getApiKey'
 	const tourType = [
 		null,
@@ -26,21 +26,10 @@
 	const url2 = 'https://lab-quade.de/fahrdienst_app/tour_header_2.php'
 	const init = async () => {
 		const { key, datum, time, url } = getApiKey()
-		let text = ''
-		if ($uid && $uid === key) {
-			console.log('TRUE UID', $uid)
-
-			text = `Reload: ${$uid}`
-		} else {
-			console.log('Fail UID')
-			uid.set(key)
-			text = `Firstload: ${key}`
-		}
-
 		try {
 			const data = await getHeader(url)
 			if (data) {
-				console.log(data)
+				console.log('Header geladen', data.length)
 				return data
 			}
 
@@ -49,10 +38,6 @@
 			console.error(error)
 			return error
 		}
-
-		// console.log(data);
-
-		// return data
 	}
 
 	async function sendeDaten(RH_ID: number) {
@@ -101,6 +86,8 @@
 	}
 
 	let promise1 = $state(init())
+
+	// let c = { "Routentyp": 1, "Routenname": "AA", "Fahrer": "", "Boxen": 17, "RH_ID": 2828, "Zusatzinfo": "" }
 </script>
 
 {#await promise1}
@@ -124,7 +111,7 @@
 				<button
 					onclick={() => {
 						sendeDaten(RH_ID)
-						console.log({
+						routeStore.set({
 							Routentyp,
 							Routenname,
 							Fahrer,

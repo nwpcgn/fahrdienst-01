@@ -44,10 +44,12 @@ export interface Icons {
 	icon: string
 }
 export interface LocalStore {
-	key: string
-	datum: string
-	tour: Tour
-	step: number
+	Routentyp: number
+	Routenname: string
+	Fahrer: string
+	Boxen: number
+	RH_ID: number
+	Zusatzinfo: string
 }
 
 // import type {Tour,TourStop,TourCallBack,Icons,LocalStore} from './lib/types'

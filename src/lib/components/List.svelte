@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { SvelteMap } from 'svelte/reactivity'
 	import type { TourCallBack } from '../types'
-	import { apiStore } from '../storage'
+	import { routeStore } from '../storage'
 	import { app } from '../app.svelte.ts'
 	import log from './log/log.svelte.ts'
 	import ListItem from './ListItem.svelte'
 	import sleep from '../utils/sleep.js'
 	let callbackMap = new SvelteMap()
-	let listId = $state($apiStore?.step || 1)
+	let listId = $state($routeStore?.step || 1)
 </script>
 
 {#if app?.tourList}
@@ -44,7 +44,7 @@
 
 					await sleep(1000)
 					listId = nextId
-					apiStore.update((d) => {
+					routeStore.update((d) => {
 						return { ...d, step: listId }
 					})
 				}}></ListItem>

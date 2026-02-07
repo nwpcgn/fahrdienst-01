@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SvelteSet } from 'svelte/reactivity'
+	import { tourId } from './lib/storage'
 	let {
 		laufende_nummer,
 		eins_kuerzel,
@@ -14,55 +14,37 @@
 		material,
 		befunde,
 		proben,
-		listId = $bindable(1),
+		id,
+		visited = $bindable(),
 		onSubmit
 	} = $props()
-	let visited = new SvelteSet<number>()
-	let rBefunde = $state(2)
-	let rMaterial = $state(2)
-	let rProben = $state(2)
-	let elem: HTMLDivElement = $state()
-	let isDisabled = $derived(listId != laufende_nummer)
+	let rBefunde = $state(befunde || 2)
+	let rMaterial = $state(material || 2)
+	let rProben = $state(proben || 2)
+
+	// let isDisabled = $derived(listId != laufende_nummer)
 	let isBox = $derived(parseInt(eins_boxen))
-	$effect(() => {
-		if (listId == laufende_nummer && elem) {
-			elem.scrollIntoView({
-				behavior: 'smooth',
-				block: 'start',
-				inline: 'nearest'
-			})
-		}
-	})
+	// $effect(() => {
+	// 	if (listId == id && elem) {
+	// 		elem.scrollIntoView({
+	// 			behavior: 'smooth',
+	// 			block: 'start',
+	// 			inline: 'nearest'
+	// 		})
+	// 	}
+	// })
+
+	// const arrayToSave = Array.from(mySet)
 </script>
 
-<!-- <div class="split py-4">
-	<div class="flex flex-col">
-		{@html eins_name.replaceAll('\n', '<br>')}
-	</div>
-	<div class="flex flex-col">
-		{@render callBackForm()}
-		<button
-			class="btn"
-			onclick={() => {
-				console.log({
-					eins_kuerzel,
-					befunde: rBefunde,
-					material: rMaterial,
-					proben: rProben
-				})
-				onSubmit({
-					eins_kuerzel,
-					befunde: rBefunde,
-					material: rMaterial,
-					proben: rProben
-				})
-			}}>Submit</button>
-	</div>
-</div> -->
 
-<li bind:this={elem} class="list-row" class:bg-base-300={visited.has(laufende_nummer)} class:grayscale={visited.has(laufende_nummer)}>
-	
-	<div> 
+
+<li
+	class="list-row"
+	style="--radius-box: 0;"
+	class:bg-base-300={visited.has(id)}
+	class:grayscale={visited.has(id)}>
+	<div>
 		<div class="text-sm font-thin text-neutral">
 			{eins_kuerzel}
 		</div>
@@ -95,19 +77,15 @@
 	<div class="list-col-wrap text-xs">
 		<button
 			onclick={() => {
-				console.log({
-					eins_kuerzel,
-					befunde: rBefunde,
-					material: rMaterial,
-					proben: rProben
-				})
 				onSubmit({
 					eins_kuerzel,
 					befunde: rBefunde,
 					material: rMaterial,
 					proben: rProben
-				}) 
-				visited.add(laufende_nummer)
+				})
+				visited.add(id)
+				const arrayToSave = Array.from(visited)
+				tourId.set(arrayToSave)
 			}}
 			class="btn btn-soft btn-sm btn-info">
 			Submit
@@ -129,7 +107,7 @@
 {/snippet}
 
 {#snippet callBackForm()}
-	<fieldset class="fieldset rounded-box border border-info p-2">
+	<fieldset class="fieldset rounded-lg border border-info p-2">
 		<label class="split cursor-pointer">
 			<span class="text-base font-bold">M</span>
 			<input
@@ -137,7 +115,8 @@
 					// const isChecked = e.currentTarget.checked
 					rMaterial = e.currentTarget.checked ? 1 : 2
 				}}
-				type="checkbox" />
+				type="checkbox"
+				checked={rMaterial == 1} />
 		</label>
 		<label class="split cursor-pointer">
 			<span class="text-base font-bold">B</span>
@@ -146,7 +125,8 @@
 					// const isChecked = e.currentTarget.checked
 					rBefunde = e.currentTarget.checked ? 1 : 2
 				}}
-				type="checkbox" />
+				type="checkbox"
+				checked={rBefunde == 1} />
 		</label>
 
 		<label class="split cursor-pointer">
@@ -156,7 +136,8 @@
 					// const isChecked = e.currentTarget.checked
 					rProben = e.currentTarget.checked ? 1 : 2
 				}}
-				type="checkbox" />
+				type="checkbox"
+				checked={rProben == 1} />
 		</label>
 	</fieldset>
 {/snippet}

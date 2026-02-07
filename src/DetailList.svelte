@@ -1,16 +1,21 @@
 <script lang="ts">
+	import { SvelteSet } from 'svelte/reactivity'
 	import DetailItem from './DetailItem.svelte'
 	import { getDetail } from './lib'
-	import { uid, rhId, tourId } from './lib/storage.ts'
+	import { uid, rhId, tourId, routeLength, routeStore } from './lib/storage.ts'
 	import getApiKey from './lib/getApiKey'
 	import { sleep } from './lib'
+	import { onMount } from 'svelte'
 	const url3 = 'https://lab-quade.de/fahrdienst_app/tour_detail_2.php'
-
+	let visited = new SvelteSet<number>()
 	const ladeDetails = async (url: string) => {
 		console.log('Lade Details', url)
 		try {
 			const r = await getDetail(url)
-			if (r) return r
+			if (r) {
+				routeLength.set(r.length)
+				return r
+			}
 
 			throw new Error({ error: 'Detail Fetch Error' })
 		} catch (error) {
@@ -65,10 +70,24 @@
 
 	let promise2 = $state(sleep(10))
 
-	$effect(() => {
+	onMount(() => {
 		if ($rhId) {
 			const uri = `https://lab-quade.de/fahrdienst_app/tour_detail_2.php?uid=${$uid}&tour_id=${$rhId}`
 			promise2 = ladeDetails(uri)
+
+			if ($tourId) {
+				visited = new SvelteSet<number>($tourId)
+				console.log('Visited from tourId:', visited)
+			} else {
+				console.log('No tourId, start with empty visited set')
+			}
+		}
+
+		return () => {
+			console.log('Unmount DetailList')
+			const arrayToSave = Array.from(visited)
+			console.log('Array to save:', arrayToSave)
+			tourId.set(arrayToSave) // Speichern des Arrays in tourId
 		}
 	})
 </script>
@@ -77,13 +96,21 @@
 	<p>...loading</p>
 {:then value}
 	{#if value}
-		<!-- <div><pre>{JSON.stringify(value)}</pre></div> -->
-		<ul class="list rounded-box bg-base-100 shadow-md">
+		{#if $routeStore?.Zusatzinfo}
+			<div class="mb-4 alert alert-warning shadow-lg">
+				{@render iconT('fd-info')}
+				<span>{$routeStore?.Zusatzinfo}</span>
+			</div>
+		{/if}
+		<ul class="list bg-base-100 shadow-md">
 			{#each value as item, id (id)}
-				<DetailItem {...item} {id} {onSubmit}></DetailItem>
+				<DetailItem {...item} {id} {onSubmit} bind:visited></DetailItem>
 			{/each}
 		</ul>
 	{/if}
 {:catch error}
 	<div><pre>{JSON.stringify(error)}</pre></div>
 {/await}
+{#snippet iconT(name)}
+	<svg class="nwp-icon"><use xlink:href="#{name}"></use></svg>
+{/snippet}
