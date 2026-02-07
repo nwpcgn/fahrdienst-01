@@ -33,7 +33,7 @@
 				return data
 			}
 
-		//	throw new Error('Fetch Error: No data returned')
+			//	throw new Error('Fetch Error: No data returned')
 		} catch (error) {
 			throw new Error(error.message)
 		}

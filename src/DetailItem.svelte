@@ -51,7 +51,6 @@
 		</div>
 		{#if eins_bedarf}
 			<div class="badge badge-xs badge-success">Bedarf</div>
-		
 		{/if}
 	</div>
 	<div class="text-base">
@@ -110,8 +109,7 @@
 
 {#snippet callBackForm()}
 	<fieldset class="fieldset rounded-lg border border-info p-2">
-
-				<label class="split cursor-pointer">
+		<label class="split cursor-pointer">
 			<span class="text-base font-bold">B</span>
 			<input
 				onchange={(e) => {
@@ -131,7 +129,6 @@
 				type="checkbox"
 				checked={rMaterial == 1} />
 		</label>
-
 
 		<label class="split cursor-pointer">
 			<span class="text-base font-bold">P</span>

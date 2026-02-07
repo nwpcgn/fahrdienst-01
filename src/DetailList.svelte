@@ -1,6 +1,6 @@
 <script lang="ts">
-  import TourEnde from './TourEnde.svelte';
-
+	import TourEnde from './TourEnde.svelte'
+	import Dialog from './lib/components/Dialog.svelte'
 	import { SvelteSet } from 'svelte/reactivity'
 	import DetailItem from './DetailItem.svelte'
 	import { getDetail } from './lib'
@@ -109,6 +109,7 @@
 {:catch error}
 	<div><pre>{JSON.stringify(error)}</pre></div>
 {/await}
+
 {#snippet iconT(name)}
 	<svg class="nwp-icon"><use xlink:href="#{name}"></use></svg>
 {/snippet}
