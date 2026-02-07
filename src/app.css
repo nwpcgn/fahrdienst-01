@@ -203,6 +203,7 @@ body {
 		overflow-y: auto;
 		display: flex;
 		flex-direction: column;
+		padding-bottom: 2rem;
 
 		> article {
 			padding: var(--spacing-clamp);
