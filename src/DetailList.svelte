@@ -9,7 +9,7 @@
 	const url3 = 'https://lab-quade.de/fahrdienst_app/tour_detail_2.php'
 	let visited = new SvelteSet<number>()
 	const ladeDetails = async (url: string) => {
-		console.log('Lade Details', url)
+		// console.log('Lade Details', url)
 		try {
 			const r = await getDetail(url)
 			if (r) {
@@ -77,9 +77,9 @@
 
 			if ($tourId) {
 				visited = new SvelteSet<number>($tourId)
-				console.log('Visited from tourId:', visited)
+				// console.log('Visited from tourId:', visited)
 			} else {
-				console.log('No tourId, start with empty visited set')
+				// console.log('No tourId, start with empty visited set')
 			}
 		}
 	})

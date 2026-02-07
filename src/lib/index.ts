@@ -39,7 +39,7 @@ import type { Tour, TourStop } from './types'
 
 export const getHeader = async (url: string): Tour[] => {
 	try {
-		console.log(url) // 'https://lab-quade.de/fahrdienst_app/tour_header_2.php?uid=e511dc6d6f5009dca62724a45f8e17c1&datum=2026-02-02'
+		// console.log(url) // 'https://lab-quade.de/fahrdienst_app/tour_header_2.php?uid=e511dc6d6f5009dca62724a45f8e17c1&datum=2026-02-02'
 		const response = await fetch(url, {
 			method: 'GET',
 			mode: 'cors'
@@ -78,7 +78,7 @@ export const getHeader = async (url: string): Tour[] => {
 
 export const getDetail = async (url: string): TourStop[] => {
 	try {
-		console.log('Get Detail', url)
+		// console.log('Get Detail', url)
 		const response = await fetch(url, {
 			method: 'GET', // Standardmäßig GET
 			mode: 'cors' // Explizit auf CORS setzen

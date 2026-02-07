@@ -57,8 +57,10 @@
 <SideBar bind:showSb>
 	<h4>Info</h4>
 	<ul>
-		<li>UID: {$uid}</li>
+		<li>UID: {$uid ? 'True' : 'False'}</li>
 		<li>RH_ID: {$rhId}</li>
+		<li>Visited: {$tourId?.length ?? 0}</li>
+		<li>Version: {VERS}</li>
 	</ul>
 	<nav class="nav">
 		<button
@@ -67,7 +69,8 @@
 				tourId.set([])
 				rhId.set(0)
 				promise = init()
-			}}>Reset R</button>
+				showSb = false
+			}}>Reset</button>
 	</nav>
 </SideBar>
 

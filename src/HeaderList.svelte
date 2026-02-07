@@ -104,7 +104,7 @@
 				<span class="h4 font-bold">{Routenname}</span>
 
 				<span
-					class="badge badge-sm"
+					class="badge badge-md"
 					class:badge-info={label === 'info'}
 					class:badge-error={label === 'error'}
 					class:badge-warning={label === 'warning'}>{slug}</span>
@@ -123,8 +123,7 @@
 						// showModal = true
 					}}
 					aria-label="Select Route"
-					class="btn btn-circle btn-soft"
-					class:active={RH_ID === app.tourId}>
+					class="btn btn-circle btn-soft">
 					{@render iconT('fd-send')}
 				</button>
 			</li>
