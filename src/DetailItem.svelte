@@ -63,6 +63,13 @@
 			<a class="text-info" href="tel: {eins_telefon.replace('0', '+49')}"
 				>{eins_telefon.replace('0', '+49')}</a>
 		{/if}
+		<div>
+			<a
+				class="text-info"
+				href="https://maps.google.de/?daddr={eins_strasse}+{eins_plz}+{eins_ort}&saddr=My+Location"
+				target="_blank"
+				rel="noreferrer">Map</a>
+		</div>
 	</div>
 	{#if isBox || eins_info}
 		<div class="list-col-wrap space-y-2">
@@ -74,7 +81,10 @@
 			{/if}
 		</div>
 	{/if}
-	{@render callBackForm()}
+	<div>
+		{@render callBackForm()}
+	</div>
+
 	<div class="list-col-wrap text-xs">
 		<button
 			onclick={() => {

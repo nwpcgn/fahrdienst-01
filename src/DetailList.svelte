@@ -4,7 +4,14 @@
 	import { SvelteSet } from 'svelte/reactivity'
 	import DetailItem from './DetailItem.svelte'
 	import { getDetail } from './lib'
-	import { uid, rhId, tourId, routeLength, routeStore } from './lib/storage.ts'
+	import {
+		uid,
+		rhId,
+		tourId,
+		routeLength,
+		routeStore,
+		fid
+	} from './lib/storage.ts'
 	import getApiKey from './lib/getApiKey'
 	import { sleep } from './lib'
 	import { onMount } from 'svelte'
@@ -38,6 +45,7 @@
 				befunde,
 				material,
 				proben,
+				Fahrer_ID: $fid,
 				erledigt_um: `${datum} ${time}`
 			})
 		)

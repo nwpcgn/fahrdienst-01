@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getHeader } from './lib'
-	import { rhId, routeStore } from './lib/storage.ts'
+	import { rhId, routeStore, fid } from './lib/storage.ts'
 	import getApiKey from './lib/getApiKey'
 	const tourType = [
 		null,
@@ -50,6 +50,7 @@
 			JSON.stringify({
 				RH_ID,
 				inuse: 1,
+				Fahrer_ID: $fid,
 				history: `${datum} ${time}, Tour übernommen`
 			})
 		)

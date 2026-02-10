@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { uid, rhId, tourId } from './lib/storage.ts'
+	import { uid, rhId, tourId, alertList } from './lib/storage.ts'
 	import getApiKey from './lib/getApiKey'
 	import Dialog from './lib/components/Dialog.svelte'
 	let intId: number | null = $state(null)
+	let sound: HTMLAudioElement = $state(null)
 
 	const fetchAlerts = async () => {
 		console.log('Fetch Alerts')
@@ -23,12 +24,13 @@
 			const { data, error } = await response.json()
 
 			if (error) {
-				console.log('Error', error)
+				// console.log('Error', error)
 				throw new Error(error)
 			}
 
 			if (data) {
 				console.log('Nachrichten', data)
+				sound.play()
 				return data
 			}
 
@@ -78,6 +80,7 @@
 
 			if (info) {
 				console.log(info)
+
 				return info
 			}
 
@@ -91,17 +94,16 @@
 	let promise = $state(fetchAlerts())
 
 	onMount(() => {
-		intId = setInterval(
-			() => {
-				promise = fetchAlerts()
-			},
-			1000 * 60 * 2
-		)
+		intId = setInterval(() => {
+			promise = fetchAlerts()
+		}, 1000 * 30)
 		return () => {
 			if (intId) clearInterval(intId)
 		}
 	})
 </script>
+
+<audio bind:this={sound} src="./beep.mp3"></audio>
 
 {#await promise then value}
 	{#if value.length > 0}
@@ -115,6 +117,10 @@
 							class="btn"
 							onclick={() => {
 								onSubmit(item?.rn_id)
+								const { time } = getApiKey()
+								alertList.update((d) => {
+									return [...d, `${time} ${item?.Nachricht}`]
+								})
 							}}>OK</button>
 					</form>
 				</div>

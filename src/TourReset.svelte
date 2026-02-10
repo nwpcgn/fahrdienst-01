@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { uid, rhId, tourId } from './lib/storage'
+	import { uid, rhId, tourId, fid } from './lib/storage'
 	import getApiKey from './lib/getApiKey'
 	const url4 = 'https://lab-quade.de/fahrdienst_app/tour_header_2.php'
 	let { onSuccess } = $props()
@@ -12,6 +12,7 @@
 			JSON.stringify({
 				RH_ID: $rhId,
 				inuse: 2,
+				Fahrer_ID: $fid,
 				history: `${datum} ${time}, Tour wieder freigegeben`
 			})
 		)

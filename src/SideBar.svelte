@@ -3,7 +3,7 @@
 </script>
 
 <aside
-	class="fixed inset-0 z-40 transform border bg-base-200 transition-all duration-400 ease-in"
+	class="fixed inset-0 z-40 transform overflow-hidden border bg-base-200 transition-all duration-400 ease-in"
 	class:opacity-50={!showSb}
 	class:translate-x-full={!showSb}>
 	<button
@@ -12,7 +12,7 @@
 		aria-label="Close Sidebar">
 		{@render iconT('fd-close')}
 	</button>
-	<div class="content flex flex-col gap-4">
+	<div class="content flex flex-col gap-4 overflow-auto">
 		{@render children?.()}
 	</div>
 </aside>

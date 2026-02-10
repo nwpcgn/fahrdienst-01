@@ -2,7 +2,7 @@
 	import { SvelteSet } from 'svelte/reactivity'
 	import DetailItem from './DetailItem.svelte'
 	import { getDetail } from './lib'
-	import { uid, rhId, tourId } from './lib/storage.ts'
+	import { uid, rhId, tourId, alertList, fid } from './lib/storage.ts'
 	import getApiKey from './lib/getApiKey'
 	import { sleep } from './lib'
 	import { onMount } from 'svelte'
@@ -32,6 +32,7 @@
 			JSON.stringify({
 				RH_ID: $rhId,
 				inuse: 3,
+				Fahrer_ID: $fid,
 				history: `${datum} ${time}, Tour beendet`
 			})
 		)
@@ -47,11 +48,15 @@
 			const { info, error } = await response.json()
 			if (error) {
 				alert(JSON.stringify(error))
+				rhId.set(0)
+				alertList.set([])
+				tourId.set([])
 				throw new Error(error)
 			}
 
 			if (info) {
 				console.log(info)
+				alertList.set([])
 				rhId.set(0)
 				tourId.set([])
 
