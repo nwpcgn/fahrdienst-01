@@ -89,7 +89,10 @@
 					fid.set(0)
 					fahrer.set('')
 				}}
-				class="btn btn-error">Logout</button>
+				class="btn btn-error"
+				><svg class="nwp-icon fd-log-out"
+					><use xlink:href="#fd-log-out"></use></svg>
+				<span>Logout</span></button>
 		</nav>
 		<div class="flex flex-col gap-4">
 			{#each $alertList as item}

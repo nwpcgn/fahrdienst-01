@@ -53,22 +53,25 @@
 			<div class="badge badge-xs badge-success">Bedarf</div>
 		{/if}
 	</div>
-	<div class="text-base">
+	<div class="text-base" style="--fs: 16px;">
 		<div class="line-clamp-4 font-bold">
 			{@html eins_name.replaceAll('\n', '<br>')}
 		</div>
 		<div>{eins_strasse}</div>
 		<div>{eins_plz} {eins_ort}</div>
 		{#if eins_telefon}
-			<a class="text-info" href="tel: {eins_telefon.replace('0', '+49')}"
-				>{eins_telefon.replace('0', '+49')}</a>
+			<a class="nav text-info" href="tel: {eins_telefon.replace('0', '+49')}"
+				><svg class="nwp-icon fd-phone"><use xlink:href="#fd-phone"></use></svg>
+				<span>{eins_telefon.replace('0', '+49')}</span></a>
 		{/if}
 		<div>
 			<a
-				class="text-info"
+				class="nav text-info"
 				href="https://maps.google.de/?daddr={eins_strasse}+{eins_plz}+{eins_ort}&saddr=My+Location"
 				target="_blank"
-				rel="noreferrer">Map</a>
+				rel="noreferrer"
+				><svg class="nwp-icon"><use xlink:href="#fd-compass"></use></svg>
+				<span>Map</span></a>
 		</div>
 	</div>
 	{#if isBox || eins_info}
