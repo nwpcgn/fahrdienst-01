@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Auth from './Auth.svelte'
-
 	import Alerts from './Alerts.svelte'
 	import TourReset from './TourReset.svelte'
 	import SideBar from './SideBar.svelte'
@@ -10,7 +9,7 @@
 	import { uid, rhId, tourId, fid, fahrer, alertList } from './lib/storage.ts'
 	import Sprites from './lib/components/Sprites.svelte'
 	import getApiKey from './lib/getApiKey'
-	const VERS = 'v0.2.07'
+	const VERS = 'v0.2.08'
 	let isAuthenticated = $state(false)
 
 	let showSb = $state(false)

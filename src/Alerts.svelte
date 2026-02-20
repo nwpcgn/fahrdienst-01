@@ -6,6 +6,8 @@
 	let intId: number | null = $state(null)
 	let sound: HTMLAudioElement = $state(null)
 
+	let isReload = $state(false)
+
 	const fetchAlerts = async () => {
 		console.log('Fetch Alerts')
 
@@ -30,6 +32,9 @@
 
 			if (data) {
 				console.log('Nachrichten', data)
+				if (data[0]?.Nachricht.includes('Achtung Tourdaten')) {
+					isReload = true
+				}
 				sound.play()
 				return data
 			}
@@ -44,7 +49,7 @@
 			// 	return response.text()
 			// }
 		} catch (error) {
-			console.error('Fehler beim Abrufen der Daten:', error)
+			// console.error('Fehler beim Abrufen der Daten:', error)
 			throw new Error(error)
 		}
 	}
@@ -88,6 +93,11 @@
 		} catch (f) {
 			console.error(f)
 			throw new Error(f)
+		} finally {
+			if (isReload) {
+				location.reload()
+			}
+			isReload = false
 		}
 	}
 
@@ -101,6 +111,7 @@
 			if (intId) clearInterval(intId)
 		}
 	})
+	// $inspect("Reload", isReload)
 </script>
 
 <audio bind:this={sound} src="./beep.mp3"></audio>

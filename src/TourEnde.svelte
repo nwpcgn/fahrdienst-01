@@ -7,7 +7,7 @@
 	import { sleep } from './lib'
 	import { onMount } from 'svelte'
 	const url4 = 'https://lab-quade.de/fahrdienst_app/tour_header_2.php'
-
+	let kommentar = $state('')
 	/* 	const ladeDetails = async (url: string) => {
 		// console.log('Lade Details', url)
 		try {
@@ -33,7 +33,8 @@
 				RH_ID: $rhId,
 				inuse: 3,
 				Fahrer_ID: $fid,
-				history: `${datum} ${time}, Tour beendet`
+				history: `${datum} ${time}, Tour beendet`,
+				Kommentar: kommentar
 			})
 		)
 		try {
@@ -73,6 +74,14 @@
 	// let promise2 = $state(sleep(10))
 </script>
 
-<footer class="p-4 text-center">
-	<button onclick={onSubmit} class="btn btn-error">Tour beenden</button>
+<footer class="flex justify-center">
+	<div class="flex w-96 flex-col gap-4 p-4 py-4">
+		<div>
+			<label class="label">Kommentar</label>
+			<textarea bind:value={kommentar} class="textarea" rows="4"></textarea>
+		</div>
+		<div>
+			<button onclick={onSubmit} class="btn btn-error">Tour beenden</button>
+		</div>
+	</div>
 </footer>

@@ -12,7 +12,7 @@
 		aria-label="Close Sidebar">
 		{@render iconT('fd-close')}
 	</button>
-	<div class="content flex flex-col gap-4 overflow-auto">
+	<div class="content flex flex-col gap-4 overflow-y-auto">
 		{@render children?.()}
 	</div>
 </aside>

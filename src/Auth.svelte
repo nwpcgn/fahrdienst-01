@@ -1,6 +1,6 @@
 <script lang="ts">
 	import CryptoJS from 'crypto-js'
-	import { uid, fid, fahrer } from './lib/storage.ts'
+	import { uid, fid, fahrer, fro } from './lib/storage.ts'
 	import getApiKey from './lib/getApiKey'
 	const url5 = 'https://lab-quade.de/fahrdienst_app/tour_auth.php'
 	let { isAuthenticated = $bindable(false) } = $props()
@@ -10,17 +10,6 @@
 		const { time, datum } = getApiKey()
 		const formData = new URLSearchParams()
 		formData.append('uid', $uid)
-		/* 		formData.append(
-			'json_input',
-			JSON.stringify({
-				RH_ID: $rhId,
-				eins_kuerzel,
-				befunde,
-				material,
-				proben,
-				erledigt_um: `${datum} ${time}`
-			})
-		) */
 		try {
 			const response = await fetch(url5, {
 				method: 'POST',
@@ -68,6 +57,7 @@
 				console.log({ id })
 				fahrer.set(username)
 				fid.set(data?.user_id)
+				fro.set(data?.user_rolle)
 				isAuthenticated = true
 			}
 

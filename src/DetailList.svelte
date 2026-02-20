@@ -15,7 +15,7 @@
 	import getApiKey from './lib/getApiKey'
 	import { sleep } from './lib'
 	import { onMount } from 'svelte'
-	const url3 = 'https://lab-quade.de/fahrdienst_app/tour_detail_2.php'
+	const url3 = 'https://lab-quade.de/fahrdienst_app/tour_detail_4.php'
 	let visited = new SvelteSet<number>()
 	const ladeDetails = async (url: string) => {
 		// console.log('Lade Details', url)
@@ -32,20 +32,26 @@
 		}
 	}
 
-	const onSubmit = async ({ eins_kuerzel, befunde, material, proben }) => {
+	const onSubmit = async ({
+		rd_id,
+		befunde,
+		material,
+		proben,
+		eins_kuerzel
+	}) => {
 		// {eins_kuerzel, befunde, material, proben}
 		const { time, datum } = getApiKey()
+
 		const formData = new URLSearchParams()
 		formData.append('uid', $uid)
 		formData.append(
 			'json_input',
 			JSON.stringify({
-				RH_ID: $rhId,
-				eins_kuerzel,
-				befunde,
-				material,
-				proben,
-				Fahrer_ID: $fid,
+				RD_ID: `${rd_id}`,
+				befunde: `${befunde}`,
+				material: `${material}`,
+				proben: `${proben}`,
+				Fahrer_ID: `${$fid}`,
 				erledigt_um: `${datum} ${time}`
 			})
 		)
@@ -59,6 +65,7 @@
 			})
 
 			const { info, error } = await response.json()
+			console.log('3', { info, error })
 			if (error) {
 				alert(JSON.stringify(error))
 				throw new Error(error)
@@ -82,7 +89,7 @@
 
 	onMount(() => {
 		if ($rhId) {
-			const uri = `https://lab-quade.de/fahrdienst_app/tour_detail_2.php?uid=${$uid}&tour_id=${$rhId}`
+			const uri = `${url3}?uid=${$uid}&tour_id=${$rhId}`
 			promise2 = ladeDetails(uri)
 
 			if ($tourId) {

@@ -14,34 +14,25 @@
 		material,
 		befunde,
 		proben,
+		rd_id,
+		erledigt,
 		id,
 		visited = $bindable(),
 		onSubmit
 	} = $props()
-	let rBefunde = $state(befunde || 2)
-	let rMaterial = $state(material || 2)
-	let rProben = $state(proben || 2)
+	// let rBefunde = $state(befunde || 2)
+	// let rMaterial = $state(material || 2)
+	// let rProben = $state(proben || 2)
 
 	// let isDisabled = $derived(listId != laufende_nummer)
 	let isBox = $derived(parseInt(eins_boxen))
-	// $effect(() => {
-	// 	if (listId == id && elem) {
-	// 		elem.scrollIntoView({
-	// 			behavior: 'smooth',
-	// 			block: 'start',
-	// 			inline: 'nearest'
-	// 		})
-	// 	}
-	// })
-
-	// const arrayToSave = Array.from(mySet)
 </script>
 
 <li
 	class="list-row"
 	style="--radius-box: 0;"
-	class:bg-base-300={visited.has(id)}
-	class:grayscale={visited.has(id)}>
+	class:bg-base-300={visited.has(id) || erledigt}
+	class:grayscale={visited.has(id) || erledigt}>
 	<div>
 		<div class="text-sm font-thin text-neutral">
 			{eins_kuerzel}
@@ -92,10 +83,11 @@
 		<button
 			onclick={() => {
 				onSubmit({
+					rd_id,
 					eins_kuerzel,
-					befunde: rBefunde,
-					material: rMaterial,
-					proben: rProben
+					befunde,
+					material,
+					proben
 				})
 				visited.add(id)
 				const arrayToSave = Array.from(visited)
@@ -127,20 +119,20 @@
 			<input
 				onchange={(e) => {
 					// const isChecked = e.currentTarget.checked
-					rBefunde = e.currentTarget.checked ? 1 : 2
+					befunde = e.currentTarget.checked ? 1 : 0
 				}}
 				type="checkbox"
-				checked={rBefunde == 1} />
+				checked={befunde == 1} />
 		</label>
 		<label class="split cursor-pointer">
 			<span class="text-base font-bold">M</span>
 			<input
 				onchange={(e) => {
 					// const isChecked = e.currentTarget.checked
-					rMaterial = e.currentTarget.checked ? 1 : 2
+					material = e.currentTarget.checked ? 1 : 0
 				}}
 				type="checkbox"
-				checked={rMaterial == 1} />
+				checked={material == 1} />
 		</label>
 
 		<label class="split cursor-pointer">
@@ -148,10 +140,10 @@
 			<input
 				onchange={(e) => {
 					// const isChecked = e.currentTarget.checked
-					rProben = e.currentTarget.checked ? 1 : 2
+					proben = e.currentTarget.checked ? 1 : 0
 				}}
 				type="checkbox"
-				checked={rProben == 1} />
+				checked={proben == 1} />
 		</label>
 	</fieldset>
 {/snippet}
