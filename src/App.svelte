@@ -73,7 +73,23 @@
 			<li>Alerts: {$alertList?.length}</li>
 			<li>Version: {VERS}</li>
 		</ul>
-		<TourReset
+	
+
+		<nav class="flex gap-4">
+			<button
+				onclick={() => {
+					fid.set(0)
+					fahrer.set('')
+				}}
+				class="btn btn-error btn-soft"
+				>{@render iconT('fd-log-out')}
+				<span>Logout</span></button>
+			<button onclick={() => location.reload()} class="btn-info btn-soft btn">
+				{@render iconT('fd-refresh')}
+				<span>Refresh</span>
+			</button>
+		</nav>
+			<TourReset
 			onSuccess={() => {
 				tourId.set([])
 				rhId.set(0)
@@ -81,18 +97,6 @@
 				promise = init()
 				showSb = false
 			}}></TourReset>
-
-		<nav>
-			<button
-				onclick={() => {
-					fid.set(0)
-					fahrer.set('')
-				}}
-				class="btn btn-error"
-				><svg class="nwp-icon fd-log-out"
-					><use xlink:href="#fd-log-out"></use></svg>
-				<span>Logout</span></button>
-		</nav>
 		<div class="flex flex-col gap-4">
 			{#each $alertList as item}
 				<div role="alert" class="alert alert-info">

@@ -15,7 +15,7 @@
 	import getApiKey from './lib/getApiKey'
 	import { sleep } from './lib'
 	import { onMount } from 'svelte'
-	const url3 = 'https://lab-quade.de/fahrdienst_app/tour_detail_4.php'
+	const url3 = 'https://lab-quade.de/fahrdienst_app/tour_detail.php'
 	let visited = new SvelteSet<number>()
 	const ladeDetails = async (url: string) => {
 		// console.log('Lade Details', url)

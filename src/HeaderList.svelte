@@ -23,7 +23,7 @@
 			label: 'warning'
 		}
 	]
-	const url2 = 'https://lab-quade.de/fahrdienst_app/tour_header_2.php'
+	const url2 = 'https://lab-quade.de/fahrdienst_app/tour_header.php'
 	const init = async () => {
 		const { key, datum, time, url } = getApiKey()
 		try {

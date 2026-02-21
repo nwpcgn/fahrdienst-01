@@ -6,7 +6,7 @@
 	import getApiKey from './lib/getApiKey'
 	import { sleep } from './lib'
 	import { onMount } from 'svelte'
-	const url4 = 'https://lab-quade.de/fahrdienst_app/tour_header_2.php'
+	const url4 = 'https://lab-quade.de/fahrdienst_app/tour_header.php'
 	let kommentar = $state('')
 	/* 	const ladeDetails = async (url: string) => {
 		// console.log('Lade Details', url)

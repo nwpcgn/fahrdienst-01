@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js'
-const APIURL1 = 'https://lab-quade.de/fahrdienst_app/tour_header_2.php'
+const APIURL1 = 'https://lab-quade.de/fahrdienst_app/tour_header.php'
 // const APIURL2 = 'https://lab-quade.de/fahrdienst_app/tour_detail_2.php'
 function getApiKey() {
 	const prefix = 'LabQ'

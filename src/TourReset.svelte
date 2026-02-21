@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { uid, rhId, tourId, fid } from './lib/storage'
 	import getApiKey from './lib/getApiKey'
-	const url4 = 'https://lab-quade.de/fahrdienst_app/tour_header_2.php'
+	const url4 = 'https://lab-quade.de/fahrdienst_app/tour_header.php'
 	let { onSuccess } = $props()
 	const onSubmit = async () => {
 		const { time, datum } = getApiKey()
@@ -49,7 +49,14 @@
 	{#if $rhId}
 		<button
 			disabled={$tourId?.length >= 1}
-			class="btn btn-error"
-			onclick={onSubmit}>Tour Freigeben</button>
+			class="btn btn-success btn-soft"
+			onclick={onSubmit}>
+			{@render iconT('fd-undo')}
+			<span>Tour Freigeben</span>
+			</button>
 	{/if}
 </nav>
+
+{#snippet iconT(name)}
+	<svg class="nwp-icon"><use xlink:href="#{name}"></use></svg>
+{/snippet}
