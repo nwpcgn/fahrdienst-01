@@ -70,8 +70,8 @@
 	--color-base-200: oklch(23.26% 0.014 253.1);
 	--color-base-300: oklch(21.15% 0.012 254.09);
 	--color-base-content: oklch(97.807% 0.029 256.847);
-	--color-primary: oklch(50% 0.134 242.749);
-	--color-primary-content: oklch(97% 0.013 236.62);
+	--color-primary: oklch(55.139% 0.13998 257.59);
+	--color-primary-content: oklch(100% 0.00011 271.152);
 	--color-secondary: oklch(59% 0.249 0.584);
 	--color-secondary-content: oklch(97% 0.014 343.198);
 	--color-accent: oklch(62% 0.194 149.214);
@@ -104,6 +104,11 @@ body {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+}
+
+.bar {
+	background-color: oklch(55.139% 0.13998 257.59);
+	color: oklch(100% 0.00011 271.152);
 }
 
 @layer components {

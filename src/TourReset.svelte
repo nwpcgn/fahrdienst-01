@@ -49,11 +49,11 @@
 	{#if $rhId}
 		<button
 			disabled={$tourId?.length >= 1}
-			class="btn btn-success btn-soft"
+			class="btn btn-soft btn-success"
 			onclick={onSubmit}>
 			{@render iconT('fd-undo')}
 			<span>Tour Freigeben</span>
-			</button>
+		</button>
 	{/if}
 </nav>
 
