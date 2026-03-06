@@ -27,7 +27,7 @@
 }
 
 @plugin 'daisyui/theme' {
-	name: 'light';
+	name: 'nwp-light';
 	default: true;
 	prefersdark: false;
 	color-scheme: 'light';
@@ -36,7 +36,7 @@
 	--color-base-300: oklch(95% 0 0);
 	--color-base-content: oklch(27% 0.006 286.033);
 	--color-primary: oklch(58% 0.158 241.966);
-	--color-primary-content: oklch(90% 0.058 230.902);
+	--color-primary-content: oklch(100% 0.00011 271.152);
 	--color-secondary: oklch(44% 0.017 285.786);
 	--color-secondary-content: oklch(98% 0 0);
 	--color-accent: oklch(59% 0.249 0.584);
@@ -44,7 +44,7 @@
 	--color-neutral: oklch(14% 0.005 285.823);
 	--color-neutral-content: oklch(92% 0.004 286.32);
 	--color-info: oklch(68% 0.169 237.323);
-	--color-info-content: oklch(95% 0.026 236.824);
+	--color-info-content: oklch(100% 0.00011 271.152);
 	--color-success: oklch(59% 0.145 163.225);
 	--color-success-content: oklch(95% 0.052 163.051);
 	--color-warning: oklch(82% 0.189 84.429);
@@ -53,7 +53,7 @@
 	--color-error-content: oklch(93% 0.032 17.717);
 	--radius-selector: 0.5rem;
 	--radius-field: 0.25rem;
-	--radius-box: 0.5rem;
+	--radius-box: 0.25rem;
 	--size-selector: 0.25rem;
 	--size-field: 0.25rem;
 	--border: 1px;
@@ -62,7 +62,7 @@
 }
 
 @plugin 'daisyui/theme' {
-	name: 'dark';
+	name: 'nwp-dark';
 	default: false;
 	prefersdark: true;
 	color-scheme: 'dark';
@@ -70,30 +70,54 @@
 	--color-base-200: oklch(23.26% 0.014 253.1);
 	--color-base-300: oklch(21.15% 0.012 254.09);
 	--color-base-content: oklch(97.807% 0.029 256.847);
-	--color-primary: oklch(55.139% 0.13998 257.59);
+	--color-primary: oklch(58% 0.158 241.966);
 	--color-primary-content: oklch(100% 0.00011 271.152);
-	--color-secondary: oklch(59% 0.249 0.584);
-	--color-secondary-content: oklch(97% 0.014 343.198);
-	--color-accent: oklch(62% 0.194 149.214);
-	--color-accent-content: oklch(98% 0.018 155.826);
+	--color-secondary: oklch(44% 0.017 285.786);
+	--color-secondary-content: oklch(98% 0 0);
+	--color-accent: oklch(59% 0.249 0.584);
+	--color-accent-content: oklch(94% 0.028 342.258);
 	--color-neutral: oklch(14% 0.005 285.823);
 	--color-neutral-content: oklch(92% 0.004 286.32);
 	--color-info: oklch(68% 0.169 237.323);
-	--color-info-content: oklch(97% 0.013 236.62);
+	--color-info-content: oklch(100% 0.00011 271.152);
 	--color-success: oklch(59% 0.145 163.225);
-	--color-success-content: oklch(97% 0.021 166.113);
-	--color-warning: oklch(76% 0.188 70.08);
-	--color-warning-content: oklch(98% 0.022 95.277);
-	--color-error: oklch(57% 0.245 27.325);
-	--color-error-content: oklch(97% 0.013 17.38);
+	--color-success-content: oklch(95% 0.052 163.051);
+	--color-warning: oklch(82% 0.189 84.429);
+	--color-warning-content: oklch(41% 0.112 45.904);
+	--color-error: oklch(63% 0.237 25.331);
+	--color-error-content: oklch(93% 0.032 17.717);
 	--radius-selector: 0.5rem;
 	--radius-field: 0.25rem;
-	--radius-box: 0.5rem;
+	--radius-box: 0.25rem;
 	--size-selector: 0.25rem;
 	--size-field: 0.25rem;
 	--border: 1px;
 	--depth: 1;
 	--noise: 0;
+}
+
+@theme {
+	--color-terminal-primary: #00ff9c;
+	--color-terminal-success: #3cff00;
+	--color-terminal-error: #ff3b3b;
+	--color-terminal-warning: #ffb300;
+	--color-terminal-info: #00c8ff;
+
+	--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+	--shadow-glow: 0 0 12px rgba(0, 255, 156, 0.4);
+}
+
+@layer components {
+	.btn-nwp {
+		@apply inline-flex cursor-pointer items-center gap-2 border-transparent bg-transparent px-3 py-2 text-center capitalize transition duration-200 ease-in-out;
+	}
+
+	.btn-nwp:hover,
+	.btn-nwp.active,
+	.btn-nwp:active {
+		@apply opacity-80;
+	}
 }
 
 body {
@@ -232,9 +256,10 @@ body {
 		justify-content: center;
 	}
 
-	.page.nwp {
+	.page.nwp,
+	.ani-nwp {
 		animation: 2.5s cubic-bezier(0.25, 1, 0.3, 1) circle-in-center both;
-		animation-delay: 250ms;
+		animation-delay: var(--nwp-ani-dura, 250ms);
 	}
 
 	.page > article,
@@ -362,16 +387,20 @@ a:hover {
 }
 
 svg.icon,
-svg.nwp-icon {
-	display: inline-block;
-	width: 1em;
-	height: 1em;
-	stroke-width: 0;
+svg {
 	stroke: currentColor;
 	fill: currentColor;
+
+	&.nwp-icon {
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		stroke-width: 0;
+		stroke: currentColor;
+		fill: currentColor;
+	}
 }
 
-svg.icon,
 svg.nwp-icon {
 	font-size: var(--fs, 24px);
 }
@@ -425,4 +454,9 @@ input:where([type='checkbox']) {
 	--tw-ring-color: var(--color-primary);
 	border-radius: 2px;
 	color: var(--color-primary);
+}
+
+.pattern-bg {
+	--primary: #0082ce;
+	background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='75.141' height='43' patternTransform='scale(8) rotate(55)'><rect x='0' y='0' width='100%' height='100%' fill='%23ffffff00'/><path d='M69.212 40H46.118L34.57 20 46.118 0h23.094l11.547 20zM57.665 60H34.57L23.023 40 34.57 20h23.095l11.547 20zm0-40H34.57L23.023 0 34.57-20h23.095L69.212 0zM34.57 60H11.476L-.07 40l11.547-20h23.095l11.547 20zm0-40H11.476L-.07 0l11.547-20h23.095L46.118 0zM23.023 40H-.07l-11.547-20L-.07 0h23.094L34.57 20z' transform='translate(3,0)' stroke-width='6.5' stroke='%230082ce' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(-816,-232)' fill='url(%23a)'/></svg>");
 }

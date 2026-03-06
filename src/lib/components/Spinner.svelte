@@ -2,10 +2,19 @@
 	let { handleClick } = $props()
 </script>
 
-<div class="page nwp center z-50 bg-neutral text-neutral-content">
-	<button class="button" aria-label="Click" onclick={handleClick}>
-		<div class="loader"></div></button>
-</div>
+<main class="main fixed inset-0 overflow-hidden bg-black text-terminal-primary">
+	<section class="center page">
+		<ddiv class="padded">
+			<span class="font-mono text-xs font-thin">nwp-studio</span>
+		</ddiv>
+	</section>
+	<section
+		style="--nwp-ani-dura: 500ms;"
+		class="page nwp center z-50 bg-neutral text-neutral-content">
+		<button class="button" aria-label="Click" onclick={handleClick}>
+			<div class="loader"></div></button>
+	</section>
+</main>
 
 <style>
 	.loader {

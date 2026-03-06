@@ -1,0 +1,101 @@
+<script lang="ts">
+	let {
+		befunde,
+		eins_bedarf,
+		eins_boxen,
+		eins_info,
+		eins_kuerzel,
+		eins_name,
+		eins_ort,
+		eins_plz,
+		eins_strasse,
+		eins_telefon,
+		laufende_nummer,
+		material,
+		proben
+	} = $props()
+	let isBox = $derived(parseInt(eins_boxen))
+</script>
+
+<li class="list-row" style="--radius-box: 0;">
+	<div>
+		<div class="text-sm font-thin text-neutral">
+			{eins_kuerzel}
+		</div>
+		<div class="text-2xl font-thin tabular-nums">
+			{laufende_nummer}
+		</div>
+		{#if eins_bedarf}
+			<div class="badge badge-xs badge-success">Bedarf</div>
+		{/if}
+	</div>
+	<div class="text-base" style="--fs: 16px;">
+		<div class="line-clamp-4 font-bold">
+			{@html eins_name.replaceAll('\n', '<br>')}
+		</div>
+		<div>{eins_strasse}</div>
+		<div>{eins_plz} {eins_ort}</div>
+		{#if eins_telefon}
+			<a class="nav text-info" href="tel: {eins_telefon.replace('0', '+49')}"
+				><svg class="nwp-icon fd-phone"><use xlink:href="#fd-phone"></use></svg>
+				<span>{eins_telefon.replace('0', '+49')}</span></a>
+		{/if}
+		<div>
+			<a
+				class="nav text-info"
+				href="https://maps.google.de/?daddr={eins_strasse}+{eins_plz}+{eins_ort}&saddr=My+Location"
+				target="_blank"
+				rel="noreferrer"
+				><svg class="nwp-icon"><use xlink:href="#fd-compass"></use></svg>
+				<span>Map</span></a>
+		</div>
+	</div>
+	{#if isBox || eins_info}
+		<div class="list-col-wrap space-y-2">
+			{#if isBox}
+				{@render boxT()}
+			{/if}
+			{#if eins_info}
+				{@render infoT()}
+			{/if}
+		</div>
+	{/if}
+	<div>
+		{@render callBackForm()}
+	</div>
+</li>
+
+{#snippet boxT()}
+	<div class="flex items-center gap-2 rounded-box bg-error/20 p-2 text-error">
+		{@render iconT('fd-error')}
+		<span>{eins_boxen} Box{isBox > 1 ? 'en' : ''}</span>
+	</div>
+{/snippet}
+{#snippet infoT()}
+	<div class="flex items-center gap-2 rounded-box bg-info/20 p-2 text-info">
+		{@render iconT('fd-info')}
+		<span>{eins_info}</span>
+	</div>
+{/snippet}
+
+{#snippet callBackForm()}
+	<fieldset class="fieldset rounded-lg border border-info p-2">
+		<label class="split cursor-pointer">
+			<span class="text-base font-bold">B</span>
+			<input disabled type="checkbox" checked={befunde == 1} />
+		</label>
+		<label class="split cursor-pointer">
+			<span class="text-base font-bold">M</span>
+			<input disabled type="checkbox" checked={material == 1} />
+		</label>
+
+		<label class="split cursor-pointer">
+			<span class="text-base font-bold">P</span>
+			<input disabled type="checkbox" checked={proben == 1} />
+		</label>
+	</fieldset>
+{/snippet}
+
+{#snippet iconT(name)}
+	<svg class="nwp-icon icon-sm"><use xlink:href="#{name}"></use></svg>
+{/snippet}

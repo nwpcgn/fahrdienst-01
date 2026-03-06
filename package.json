@@ -5,11 +5,11 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
+		"format": "prettier --write .",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"lint": "prettier --check . && eslint ."
 	},
 	"devDependencies": {
 		"@eslint/compat": "^2.0.1",
@@ -38,6 +38,7 @@
 		"vite": "npm:rolldown-vite@7.2.5"
 	},
 	"dependencies": {
+		"@svelte-router/core": "^1.0.7",
 		"crypto-js": "^4.2.0"
 	}
 }

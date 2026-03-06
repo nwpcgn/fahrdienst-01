@@ -1,0 +1,49 @@
+<script lang="ts">
+	import { settings, uid } from './lib'
+	import DetailItemInfo from './lib/detailItemInfo.svelte'
+	import { getDetailGet } from './lib/fetchData'
+	let { rid } = $props()
+	const initDetails = async () => {
+		try {
+			const url = `${settings.admin.detail.url}?uid=${$uid}&tour_id=${rid}`
+			const data = await getDetailGet(url)
+			return data
+		} catch (error) {
+			console.log(error)
+		}
+	}
+	let promise = $state(initDetails())
+</script>
+
+<section class="nwp page">
+	{#await promise then value}
+		{@render topBar()}
+		<article>
+			<ul class="list bg-base-100 shadow-md">
+				<li class="p-4 pb-2 text-sm tracking-wide opacity-60">Tourenliste</li>
+				{#each value as item, i (i)}
+					<DetailItemInfo {...item}></DetailItemInfo>
+				{/each}
+			</ul>
+		</article>
+	{/await}
+</section>
+{#snippet topBar()}
+	<article>
+		<div class="split rounded-box bg-base-100 p-4 shadow-md">
+			<button class="btn-nwp" onclick={() => history.back()}>
+				{@render iconT('fd-undo', 18)}
+				<span>Zurück</span>
+			</button>
+			<div>Route: {rid}</div>
+		</div>
+	</article>
+{/snippet}
+
+{#snippet iconT(name, size)}
+	{#if size}
+		<svg width={size} height={size}><use xlink:href="#{name}"></use></svg>
+	{:else}
+		<svg class="nwp-icon"><use xlink:href="#{name}"></use></svg>
+	{/if}
+{/snippet}

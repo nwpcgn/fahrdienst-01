@@ -83,8 +83,12 @@
 		{/if}
 	</section>
 {/snippet}
-{#snippet iconT(name)}
-	<svg class="nwp-icon"><use xlink:href="#{name}"></use></svg>
+{#snippet iconT(name, size)}
+	{#if size}
+		<svg width={size} height={size}><use xlink:href="#{name}"></use></svg>
+	{:else}
+		<svg class="nwp-icon"><use xlink:href="#{name}"></use></svg>
+	{/if}
 {/snippet}
 
 <style>
