@@ -94,7 +94,7 @@
 								<FahrInfoDetail {searchDate} rid={rp?.rid}></FahrInfoDetail>
 							{/snippet}
 						</Route>
-						<Route path="/search" key="search">
+						<Route path="/suche" key="suche">
 							<!-- 	<IconView {iconList}></IconView> -->
 							<ArztSuche></ArztSuche>
 						</Route>

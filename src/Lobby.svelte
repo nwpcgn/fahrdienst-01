@@ -26,7 +26,7 @@
 				{:else}
 					<a class="btn join-item" href="#/dienst">Fahrdienst</a>
 					<a class="btn join-item" href="#/info">Fahrinfo</a>
-					<a class="btn join-item" href="#/settings">Suche</a>
+					<a class="btn join-item" href="#/suche">Suche</a>
 				{/if}
 			</div>
 		</div>
