@@ -10,6 +10,7 @@ export const routeStore: LocalStore = useLocalStorage('routeStore', {
 	Zusatzinfo: ''
 })
 export const routeLength: number = useLocalStorage('routeLength', 0)
+export const maxSearchResult: number = useLocalStorage('maxSearchResult', 30)
 export const uid: string = useLocalStorage('uid', '')
 export const rhId: number = useLocalStorage('rhId', 0)
 export const tourId: number[] = useLocalStorage('tourId', [])

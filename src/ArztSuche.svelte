@@ -19,46 +19,42 @@
 		Sprites,
 		tourId,
 		TourReset,
-		uid
+		uid,
+		maxSearchResult
 	} from './lib'
 
 	let searchText = $state('')
 	let resultCount = $state(0)
+	let initSearched = $state(false)
+
 	const initSearch = async () => {
 		await sleep(200)
+		initSearched = true
 		resultCount = 0
 		if (!searchText) return []
 
 		await sleep(600)
 		try {
 			const url = `${settings.SEARCH_URL}?uid=${$uid}&suche=${searchText}`
-			const data = await getSearchGet(url)
-			console.log(`Suche nach: ${searchText} `, data.length)
-			resultCount = data.length
+			const { data, error } = await getSearchGet(url)
 
-			return data
+			if (data) {
+				console.log(`Suche wurden geladen: ${data.length} rows`)
+				resultCount = data?.length
+
+				return data
+			}
+
+			if (error) {
+				console.log('Suche: Nichts gefunden', error)
+
+				return []
+			}
 		} catch (error) {
 			console.log(error)
 		}
 	}
 	const init = async () => {
-		// await sleep()
-		// const { key } = getApiKey()
-		// console.log(VERS)
-		// if ($uid && $uid === key) {
-		// 	console.log('Same Day')
-		// 	if (!$rhId) {
-		// 		tourId.set([])
-		// 	}
-		// } else {
-		// 	console.log('New Day')
-		// 	uid.set(key)
-		// 	rhId.set(0)
-		// 	alertList.set([])
-		// 	tourId.set([])
-		// }
-
-		// showSb = false
 		await sleep(200)
 		return []
 	}
@@ -110,15 +106,39 @@
 	</div>
 	<div class="list-row">
 		<div class="w-32">{searchAdapt['eins_adresse']}</div>
-		<div>{@html eins_adresse.replaceAll('\n', '<br>')}</div>
+		<a
+			class="text-primary"
+			href="https://maps.google.de/?daddr={eins_adresse}&saddr=My+Location"
+			target="_blank"
+			rel="noreferrer">{@html eins_adresse.replaceAll('\n', '<br>')}</a>
 	</div>
 	<div class="list-row">
 		<div class="w-32">{searchAdapt['eins_telefon_lx']}</div>
-		<div>{eins_telefon_lx}</div>
+		<div>
+			{#if eins_telefon_lx}
+				<a
+					href="tel: {eins_telefon_lx.replace('0', '+49')}"
+					target="_blank"
+					rel="noreferrer"
+					class="text-primary">
+					{eins_telefon_lx}
+				</a>
+			{/if}
+		</div>
 	</div>
 	<div class="list-row">
 		<div class="w-32">{searchAdapt['eins_telefon_alternativ']}</div>
-		<div>{eins_telefon_alternativ}</div>
+		<div>
+			{#if eins_telefon_alternativ}
+				<a
+					href="tel: {eins_telefon_alternativ.replace('0', '+49')}"
+					target="_blank"
+					rel="noreferrer"
+					class="text-primary">
+					{eins_telefon_alternativ}
+				</a>
+			{/if}
+		</div>
 	</div>
 	<div class="list-row">
 		<div class="w-32">{searchAdapt['eins_abwesenheit']}</div>
@@ -140,58 +160,25 @@
 					<tr>
 						<th>Vormittag</th>
 						<td>{vm_tour_name}</td>
+						<td>{vm_tour_bedarf === 'B' ? 'J' : ''}</td>
 						<td>{vm_tour_drucken}</td>
-						<td>{vm_tour_bedarf}</td>
 					</tr>
 					<tr>
 						<th>Nachmittag</th>
 						<td>{nm_tour_name}</td>
+						<td>{nm_tour_bedarf === 'B' ? 'J' : ''}</td>
 						<td>{nm_tour_drucken}</td>
-						<td>{nm_tour_bedarf}</td>
 					</tr>
 					<tr>
 						<th>Sonder</th>
 						<td>{so_tour_name}</td>
+						<td>{so_tour_bedarf === 'B' ? 'J' : ''}</td>
 						<td>{so_tour_drucken}</td>
-						<td>{so_tour_bedarf}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</details>
-	<!-- <div class="bg-base-200 px-4 py-2 tracking-wide">Tourinfos</div>
-	<div>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Art</th>
-					<th>Name</th>
-					<th>Bedarf</th>
-					<th>Drucken</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th>Vormittag</th>
-					<td>{vm_tour_name}</td>
-					<td>{vm_tour_drucken}</td>
-					<td>{vm_tour_bedarf}</td>
-				</tr>
-				<tr>
-					<th>Nachmittag</th>
-					<td>{nm_tour_name}</td>
-					<td>{nm_tour_drucken}</td>
-					<td>{nm_tour_bedarf}</td>
-				</tr>
-				<tr>
-					<th>Sonder</th>
-					<td>{so_tour_name}</td>
-					<td>{so_tour_drucken}</td>
-					<td>{so_tour_bedarf}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div> -->
 {/snippet}
 
 <section class="nwp page">
@@ -203,7 +190,7 @@
 			<div class="list rounded-box bg-base-100 shadow-md">
 				{@render listHeader(daten)}
 
-				{#if resultCount > 30}
+				{#if resultCount > $maxSearchResult}
 					<div class="list-row">
 						<div class="list-col-grow">
 							<div class="font-bold">Zu viele Ergebnisse</div>
@@ -219,7 +206,10 @@
 					{:else}
 						<div class="list-row">
 							<div class="list-col-grow">
-								<label for="searchTextEl">Suchbegriff eingeben</label>
+								<label for="searchTextEl"
+									>{!initSearched
+										? 'Suchbegriff eingeben'
+										: 'Keine Einträge'}</label>
 							</div>
 						</div>
 					{/each}
@@ -231,7 +221,7 @@
 
 {#snippet listHeader(daten)}
 	<div class="p-4 pb-2 text-sm tracking-wide opacity-60">
-		Abfrage {daten.length ? 'Ergebnis' : ''}
+		Abfrage (max: {$maxSearchResult}) {daten.length ? 'Ergebnis' : ''}
 	</div>
 {/snippet}
 
@@ -270,6 +260,7 @@
 					class="btn"
 					onclick={() => {
 						searchText = ''
+
 						promise = sleep(100).then(() => [])
 					}}>Clear</button>
 				<button

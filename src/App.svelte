@@ -1,8 +1,7 @@
 <script lang="ts">
+	import Settings from './Settings.svelte'
 	import Lobby from './Lobby.svelte'
-
 	import ArztSuche from './ArztSuche.svelte'
-
 	import { location, Router, Route } from '@svelte-router/core'
 	import Auth from './Auth.svelte'
 	import FahrDienst from './FahrDienst.svelte'
@@ -28,13 +27,14 @@
 		TourReset,
 		uid
 	} from './lib'
+	import FahrerAnzeige from './FahrerAnzeige.svelte'
 
-	const VERS = 'v0.3.01'
+	const VERS = 'v0.3.02'
 	let showSb = $state(false)
 	let iconList = $state([])
 	let searchDate = $state('')
 	const init = async () => {
-		await sleep()
+		await sleep(500)
 		const { key } = getApiKey()
 		console.log(VERS)
 		if ($uid && $uid === key) {
@@ -48,10 +48,11 @@
 			rhId.set(0)
 			alertList.set([])
 			tourId.set([])
+			location.navigate('/')
 		}
 
 		showSb = false
-		await sleep(2000)
+		await sleep(100)
 		return 'ready'
 	}
 	let promise = $state(init())
@@ -94,9 +95,16 @@
 								<FahrInfoDetail {searchDate} rid={rp?.rid}></FahrInfoDetail>
 							{/snippet}
 						</Route>
-						<Route path="/suche" key="suche">
+						<Route path="/sucheArzt" key="sucheArzt">
 							<!-- 	<IconView {iconList}></IconView> -->
 							<ArztSuche></ArztSuche>
+						</Route>
+						<Route path="/anzeigeFahrer" key="anzeigeFahrer">
+							<!-- 	<IconView {iconList}></IconView> -->
+							<FahrerAnzeige></FahrerAnzeige>
+						</Route>
+						<Route path="/settings" key="settings">
+							<Settings></Settings>
 						</Route>
 					</main>
 				</div>
@@ -153,7 +161,7 @@
 
 			<div class="flex-1"></div>
 			<ul class="menu w-80">
-				<li class="menu-title">User</li>
+				<li class="menu-title">User {$fahrer ? $fahrer : ''}</li>
 				<li>
 					<a
 						class="split text-error"

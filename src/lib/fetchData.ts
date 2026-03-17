@@ -131,18 +131,23 @@ export const getSearchGet = async (url: string) => {
 		if (!response.ok) {
 			throw new Error(`HTTP-Fehler! Status: ${response.status}`)
 		}
-		const { data, error } = await response.json()
+		const result = await response.json()
 
-		if (data) {
-			console.log(`Suche wurden geladen: ${data.length} rows`)
+		return result
+	} catch (error) {
+		console.error('Fehler beim Abrufen der Daten:', error)
+	}
+}
 
-			return data
+export const getFahrerGet = async (url: string) => {
+	try {
+		const response = await fetch(url, fetchHeaderGet)
+		if (!response.ok) {
+			throw new Error(`HTTP-Fehler! Status: ${response.status}`)
 		}
+		const result = await response.json()
 
-		if (error) {
-			console.log('Error Header-Data', error)
-			throw new Error(error)
-		}
+		return result
 	} catch (error) {
 		console.error('Fehler beim Abrufen der Daten:', error)
 	}

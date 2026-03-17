@@ -23,6 +23,7 @@ export { default as TourEnde } from './tourEnde.svelte'
 export { default as TourReset } from './tourReset.svelte'
 // @endindex
 import {
+	maxSearchResult,
 	routeStore,
 	routeLength,
 	uid,
@@ -34,6 +35,7 @@ import {
 	alertList
 } from './storage'
 export {
+	maxSearchResult,
 	routeStore,
 	routeLength,
 	uid,
@@ -70,12 +72,28 @@ export const nav = [
 		disabled: 1
 	},
 	{
-		href: '/suche',
-		name: 'Suche',
+		href: '/sucheArzt',
+		name: 'Suche Arzt',
 		icon: 'fd-search',
 		hidden: false,
-		slug: 'suche',
+		slug: 'sucheArzt',
 		disabled: 1
+	},
+	{
+		href: '/anzeigeFahrer',
+		name: 'Anzeige Fahrer',
+		icon: 'fd-search',
+		hidden: false,
+		slug: 'anzeigeFahrer',
+		disabled: 1
+	},
+	{
+		href: '/settings',
+		name: 'Settings',
+		icon: 'fd-settings',
+		hidden: false,
+		slug: 'settings',
+		disabled: 0
 	}
 ]
 
@@ -87,6 +105,7 @@ export const settings = {
 	ALERT_INTERVAL: 30,
 	SEARCH_URL: 'https://lab-quade.de/fahrdienst_app/tour_einsender_auskunft.php',
 	SEARCH_MIN: 4,
+	ANZEIGE_URL: 'https://lab-quade.de/fahrdienst_app/tour_fahrer_auskunft.php',
 	fahrer: {
 		header: {
 			url: 'https://lab-quade.de/fahrdienst_app/tour_header.php',

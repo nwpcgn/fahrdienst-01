@@ -54,8 +54,8 @@
 				class="nav text-info"
 				href="https://maps.google.de/?daddr={eins_strasse}+{eins_plz}+{eins_ort}&saddr=My+Location"
 				target="_blank"
-				rel="noreferrer"
-				><svg class="nwp-icon"><use xlink:href="#fd-compass"></use></svg>
+				rel="noreferrer">
+				<svg class="nwp-icon"><use xlink:href="#fd-compass"></use></svg>
 				<span>Map</span></a>
 		</div>
 	</div>

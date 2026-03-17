@@ -9,7 +9,7 @@
 		</ddiv>
 	</section>
 	<section
-		style="--nwp-ani-dura: 500ms;"
+		style="--nwp-ani-dura: 250ms;"
 		class="page nwp center z-50 bg-neutral text-neutral-content">
 		<button class="button" aria-label="Click" onclick={handleClick}>
 			<div class="loader"></div></button>

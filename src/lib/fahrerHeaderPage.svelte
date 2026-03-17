@@ -31,7 +31,14 @@
 					</div>
 					{#each daten as { Routentyp, Routenname, Fahrzeug, inuse, RH_ID }, id (id)}
 						{@const { icon, slug, label } = tourType[Routentyp]}
-						<div class="list-row items-center" style="--fs: 20px;">
+						<button
+							onclick={() => {
+								console.log('Route laden')
+								selectRoute(RH_ID)
+								// location.navigate(`/dienst/${RH_ID}`)
+							}}
+							class="list-row items-center text-left"
+							style="--fs: 20px;">
 							{@render iconT(icon)}
 							<div>
 								<div class="h4 font-bold">{Routenname}</div>
@@ -51,18 +58,7 @@
 								class:badge-primary={label === 'info'}
 								class:badge-error={label === 'error'}
 								class:badge-warning={label === 'warning'}>{slug}</span>
-
-							<button
-								onclick={() => {
-									console.log('Route laden')
-									selectRoute(RH_ID)
-									// location.navigate(`/dienst/${RH_ID}`)
-								}}
-								aria-label="Select Route"
-								class="btn btn-circle btn-soft">
-								{@render iconT('fd-send')}
-							</button>
-						</div>
+						</button>
 					{:else}
 						<div class="list-row">
 							<div class="list-col-grow">

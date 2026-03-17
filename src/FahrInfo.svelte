@@ -65,28 +65,35 @@
 
 {#snippet resultRow({ Routentyp, Routenname, Fahrzeug, Fahrer, inuse, RH_ID })}
 	{@const { icon, slug, label } = tourType[Routentyp]}
-	<div class="list-row items-center" style="--fs: 20px;">
+	<button
+		onclick={() => {
+			console.log(`Route ${RH_ID} laden`)
+			location.navigate(`/info/${RH_ID}`)
+		}}
+		class="list-row items-center text-left"
+		style="--fs: 20px;">
 		{@render iconT(icon)}
 		<div>
 			<div class="h4 font-bold">{Routenname}</div>
 			{#if Fahrzeug}
 				<div>{Fahrzeug}</div>
-			{/if}
-			{#if Fahrer}
+			{:else if Fahrer}
 				<div>{Fahrer}</div>
 			{/if}
 		</div>
 
-		<span class="badge {adminTourType[inuse][1]}">
-			{adminTourType[inuse][0]}
-		</span>
 		<span
 			class="badge badge-md"
 			class:badge-primary={label === 'info'}
 			class:badge-error={label === 'error'}
 			class:badge-warning={label === 'warning'}>{slug}</span>
-
-		<button
+		<span class="badge {adminTourType[inuse][1]}">
+			{adminTourType[inuse][0]}
+		</span>
+		<!-- <div class="list-col-wrap">
+			
+		</div> -->
+		<!-- 		<button
 			onclick={() => {
 				console.log(`Route ${RH_ID} laden`)
 				location.navigate(`/info/${RH_ID}`)
@@ -94,8 +101,8 @@
 			aria-label="Select Route"
 			class="btn btn-circle btn-soft">
 			{@render iconT('fd-send')}
-		</button>
-	</div>
+		</button> -->
+	</button>
 {/snippet}
 
 {#snippet searchBar()}
