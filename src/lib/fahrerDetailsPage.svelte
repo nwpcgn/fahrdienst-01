@@ -13,7 +13,8 @@
 		sleep,
 		TourEnde,
 		tourId,
-		uid
+		uid,
+		routeLength
 	} from './'
 
 	let { children } = $props()
@@ -60,7 +61,8 @@
 		await sleep()
 		try {
 			const url = `${settings.fahrer.detail.url}?uid=${$uid}&tour_id=${$rhId}`
-			const data = getDetailGet(url)
+			const data = await getDetailGet(url)
+			routeLength.set(data.length)
 			return data
 		} catch (error) {
 			console.log(error)

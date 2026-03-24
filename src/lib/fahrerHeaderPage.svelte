@@ -1,6 +1,6 @@
 <script lang="ts">
 	import getApiKey from './getApiKey'
-	import { settings, tourType, adminTourType } from '.'
+	import { settings, tourType, adminTourType, routeStore } from '.'
 	import { getHeaderGet, selectRoute } from './fetchData'
 	// import type { Snippet } from 'svelte'
 
@@ -29,15 +29,20 @@
 					<div class="p-4 pb-2 text-sm tracking-wide opacity-60">
 						Routenliste
 					</div>
-					{#each daten as { Routentyp, Routenname, Fahrzeug, inuse, RH_ID }, id (id)}
+					{#each daten as { Routentyp, Routenname, Fahrzeug, inuse, RH_ID, Zusatzinfo, Boxen }, id (id)}
 						{@const { icon, slug, label } = tourType[Routentyp]}
 						<button
 							onclick={() => {
 								console.log('Route laden')
 								selectRoute(RH_ID)
+								routeStore.set({
+									Routenname,
+									Boxen,
+									Zusatzinfo
+								})
 								// location.navigate(`/dienst/${RH_ID}`)
 							}}
-							class="list-row items-center text-left"
+							class="list-row cursor-pointer items-center text-left"
 							style="--fs: 20px;">
 							{@render iconT(icon)}
 							<div>

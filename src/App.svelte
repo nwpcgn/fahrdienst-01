@@ -15,6 +15,7 @@
 		fid,
 		fro,
 		IconView,
+		infoStore,
 		nav,
 		pageAdapt,
 		rhId,
@@ -29,7 +30,7 @@
 	} from './lib'
 	import FahrerAnzeige from './FahrerAnzeige.svelte'
 
-	const VERS = 'v0.3.02'
+	const VERS = 'v0.3.03'
 	let showSb = $state(false)
 	let iconList = $state([])
 	let searchDate = $state('')
@@ -198,6 +199,11 @@
 					<span class="opacity-70">{$tourId.length}</span> /
 					<span>{$routeLength}</span>
 				</span>
+				<!-- Routenname, Zusatzinfo, History, Kommentar -->
+			{:else if current.includes('/info/')}
+				{@render iconT('fd-car')}<span>{$infoStore?.Routenname}</span>
+				{@render iconT('fd-map')}<span
+					>{$infoStore?.summe} / {$infoStore?.tourlaenge}</span>
 			{:else}
 				<button
 					class="btn-nwp text-xl font-bold"

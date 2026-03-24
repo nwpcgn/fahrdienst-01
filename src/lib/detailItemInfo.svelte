@@ -12,12 +12,13 @@
 		eins_telefon,
 		laufende_nummer,
 		material,
-		proben
+		proben,
+		erledigt
 	} = $props()
 	let isBox = $derived(parseInt(eins_boxen))
 </script>
 
-<li class="list-row" style="--radius-box: 0;">
+<li class="list-row" style="--radius-box: 0;" class:bg-base-300={erledigt == 1}>
 	<div>
 		<div class="text-sm font-thin text-neutral">
 			{eins_kuerzel}

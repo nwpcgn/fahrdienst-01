@@ -24,6 +24,7 @@ export { default as TourReset } from './tourReset.svelte'
 // @endindex
 import {
 	maxSearchResult,
+	infoStore,
 	routeStore,
 	routeLength,
 	uid,
@@ -37,6 +38,7 @@ import {
 export {
 	maxSearchResult,
 	routeStore,
+	infoStore,
 	routeLength,
 	uid,
 	rhId,

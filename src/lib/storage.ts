@@ -2,12 +2,16 @@ import type { LocalStore } from './types'
 import useLocalStorage from './useLocalStorage'
 
 export const routeStore: LocalStore = useLocalStorage('routeStore', {
-	Routentyp: 1,
-	Routenname: 'AA',
-	Fahrer: '',
+	Routenname: '',
 	Boxen: 0,
-	RH_ID: 0,
 	Zusatzinfo: ''
+})
+export const infoStore: LocalStore = useLocalStorage('infoStore', {
+	Routenname: '',
+	Boxen: 0,
+	Zusatzinfo: '',
+	summe: 0,
+	tourlaenge: 0
 })
 export const routeLength: number = useLocalStorage('routeLength', 0)
 export const maxSearchResult: number = useLocalStorage('maxSearchResult', 30)

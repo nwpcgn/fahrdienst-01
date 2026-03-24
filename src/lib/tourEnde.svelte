@@ -12,7 +12,7 @@
 	// import type { Snippet } from 'svelte'
 
 	// let { children }: { children: Snippet } = $props()
-	let { isOpen = $bindable(false) } = $props()
+	let { isOpen = $bindable(true) } = $props()
 	let kommentar = $state('')
 
 	const handleSubmit = async () => {
@@ -59,21 +59,19 @@
 	}
 </script>
 
-<div class="mt-4">
-	<div class="collapse bg-base-100 shadow-md shadow-base-300">
-		<input bind:checked={isOpen} type="checkbox" />
-		<div class="collapse-title font-semibold text-accent">Beenden ?</div>
-		<div class="collapse-content">
-			<div class="flex w-full flex-col gap-2 py-4">
-				<!-- 	<label class="label">Beenden</label> -->
-				<textarea
-					bind:value={kommentar}
-					class="textarea w-full"
-					rows="4"
-					placeholder="Kommentar"></textarea>
-				<button onclick={handleSubmit} class="btn btn-accent"
-					>Tour beenden</button>
-			</div>
+<div class="my-4">
+	<div class="padded bg-base-100 shadow-md shadow-base-300">
+		<div class=" font-semibold text-accent">Beenden ?</div>
+
+		<div class="flex w-full flex-col gap-2 py-4">
+			<!-- 	<label class="label">Beenden</label> -->
+			<textarea
+				bind:value={kommentar}
+				class="textarea w-full"
+				rows="4"
+				placeholder="Kommentar"></textarea>
+			<button onclick={handleSubmit} class="btn btn-accent"
+				>Tour beenden</button>
 		</div>
 	</div>
 </div>

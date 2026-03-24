@@ -112,6 +112,7 @@ export const selectRoute = async (RH_ID: number) => {
 
 		if (info) {
 			rhId.set(RH_ID)
+
 			console.log(`Tour ${RH_ID} wurde übernommen`, info)
 		}
 
